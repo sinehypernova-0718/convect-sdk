@@ -1,0 +1,52 @@
+name: PR Title Check
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+
+permissions:
+  pull-requests: read
+
+jobs:
+  validate-pr-title:
+    name: Validate PR title
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check PR title format
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          echo "Checking PR title:"
+          echo "$PR_TITLE"
+
+          TYPES="feat|fix|perf|test|docs|refactor|build|ci|chore"
+          SCOPES="core|protocol|sdk|transport|cli|examples|docs|ci|build"
+
+          TITLE_REGEX="^(${TYPES})(\\(${SCOPES}\\))?: [A-Z][^.!?]*[^.!?]$"
+
+          if [[ ! "$PR_TITLE" =~ $TITLE_REGEX ]]; then
+            echo ""
+            echo "❌ Invalid PR title format."
+            echo ""
+            echo "Expected:"
+            echo "<type>(<scope>): <summary>"
+            echo ""
+            echo "Examples:"
+            echo "  feat(protocol): Add device registration messages"
+            echo "  fix(core): Handle reconnect failures"
+            echo "  docs: Improve installation guide"
+            echo ""
+            echo "Allowed types:"
+            echo "  feat fix perf test docs refactor build ci chore"
+            echo ""
+            echo "Allowed scopes:"
+            echo "  core protocol sdk transport cli examples docs ci build"
+            echo ""
+            exit 1
+          fi
+
+          echo "✅ PR title follows the convention."
