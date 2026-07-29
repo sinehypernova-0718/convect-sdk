@@ -17,6 +17,7 @@
 ```
 
 ### Quick Examples
+
 - `feat(protocol): Add device registration messages`
 - `fix(core): Handle reconnect failures`
 - `refactor: Simplify transport lifecycle`
@@ -59,14 +60,16 @@ If the change spans multiple areas or is unclear, simply omit the scope.
 | `ci`        | Continuous integration and automation   |
 | `build`     | Build system and dependency changes     |
 
-*Scopes may be expanded as the project grows.*
+_Scopes may be expanded as the project grows._
 
 ### Examples with Scope
+
 - `feat(protocol): Add message validation`
 - `fix(core): Prevent duplicate device registration`
 - `test(sdk): Add device lifecycle tests`
 
 ### Examples without Scope
+
 - `feat: Add device discovery support`
 - `refactor: Simplify package exports`
 - `docs: Update contribution guide`
@@ -81,11 +84,13 @@ If the change spans multiple areas or is unclear, simply omit the scope.
 - **Do not** end with a period.
 
 ### ✅ Good
+
 ```
 feat(protocol): Add device registration messages
 ```
 
 ### ❌ Bad
+
 ```
 feat(protocol): Added device registration messages.
 ```
@@ -95,6 +100,7 @@ feat(protocol): Added device registration messages.
 ## 📋 Complete Examples
 
 ### ✔️ Valid Titles
+
 ```
 feat: Add device discovery support
 feat(protocol): Add handshake message format
@@ -104,8 +110,10 @@ docs: Improve development setup guide
 ```
 
 ### ✖️ Invalid Titles
+
 ```
 Added new feature          ← wrong tense, missing type
 update stuff               ← lowercase, vague
 fix: fixed a bug.          ← wrong tense, period
 feature(protocol): Add...  ← wrong type keyword (use feat)
+```

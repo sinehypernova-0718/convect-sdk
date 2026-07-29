@@ -1,0 +1,20 @@
+{
+  "name": "@convect/sdk",
+  "version": "0.1.0",
+  "description": "Main Convect SDK package",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "lint": "eslint src --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@convect/core": "workspace:*",
+    "@convect/protocol": "workspace:*"
+  }
+}

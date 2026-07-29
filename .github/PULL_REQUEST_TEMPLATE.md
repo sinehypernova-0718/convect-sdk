@@ -5,8 +5,6 @@ Describe what this PR does and why it is needed.
 Keep it concise and focus on the purpose of the change.
 -->
 
-
-
 ## How to Test
 
 <!--
@@ -18,8 +16,6 @@ Include:
 - Manual verification steps (if applicable)
 -->
 
-
-
 ## Supporting Documentation
 
 <!--
@@ -29,9 +25,7 @@ that support this change.
 Remove this section if not applicable.
 -->
 
-- 
-
-
+-
 
 ## Related Issues / PRs
 
@@ -42,7 +36,6 @@ Examples:
 Fixes #123
 Related to #456
 -->
-
 
 ## Checklist
 
