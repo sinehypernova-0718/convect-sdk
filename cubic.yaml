@@ -1,0 +1,92 @@
+# yaml-language-server: $schema=https://cubic.dev/schema/cubic-repository-config.schema.json
+
+# cubic.yaml
+# Lightweight AI review configuration for Convect SDK.
+
+version: 1
+
+reviews:
+  enabled: true
+  sensitivity: medium
+  incremental_commits: true
+  show_ai_feedback_buttons: false
+
+  custom_instructions: |-
+    You are reviewing Convect SDK, an IoT communication SDK.
+
+    Review only changes introduced by this PR.
+    Do not report pre-existing issues.
+
+    Be practical:
+    - Avoid style-only comments.
+    - Do not request tests for trivial changes.
+    - Only raise issues that can affect correctness, security,
+      maintainability, or users of the SDK.
+
+  custom_rules:
+
+    - name: Public API Stability
+      description: |-
+        Convect is an SDK consumed by external developers.
+
+        Check for:
+        - Accidental breaking changes to public APIs.
+        - Removing or renaming exported members.
+        - Changes that make future compatibility harder.
+        - Missing documentation for significant API changes.
+
+    - name: Protocol Safety
+      description: |-
+        Convect handles device communication protocols.
+
+        Check for:
+        - Breaking changes to message formats.
+        - Unsafe serialization/deserialization changes.
+        - Missing validation of external device data.
+        - Changes that reduce backward compatibility.
+
+    - name: Transport Reliability
+      description: |-
+        Review transport implementations such as MQTT,
+        WebSocket, Serial, and future transports.
+
+        Check for:
+        - Resource leaks.
+        - Missing cleanup.
+        - Incorrect connection lifecycle handling.
+        - Poor error handling.
+        - Reconnection issues.
+
+    - name: Security Basics
+      description: |-
+        Check for common security issues:
+
+        - Hardcoded secrets.
+        - Sensitive data in logs.
+        - Disabled TLS verification.
+        - Unsafe handling of external input.
+        - Obvious injection vulnerabilities.
+
+    - name: Testing Expectations
+      description: |-
+        Be reasonable about tests.
+
+        Tests are expected for:
+        - New functionality.
+        - Bug fixes.
+        - Protocol or transport behavior changes.
+
+        Do not require tests for:
+        - Types.
+        - Configuration files.
+        - Documentation-only changes.
+        - Simple exports.
+
+pr_descriptions:
+  generate: false
+  instructions: |-
+    Keep PR scope focused.
+    Review only the changes introduced by the PR.
+
+issues:
+  fix_with_cubic_buttons: true
