@@ -34,7 +34,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "clean": "rimraf dist .turbo",
+    "clean": "rimraf dist coverage tsconfig.tsbuildinfo",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
