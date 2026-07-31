@@ -1,0 +1,79 @@
+{
+  "name": "@convect/transports",
+  "version": "0.1.0",
+  "description": "Collection of officially supported transport implementations for the Convect SDK.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "sideEffects": false,
+  "keywords": [
+    "convect",
+    "iot",
+    "transport",
+    "mqtt",
+    "serial",
+    "webserial",
+    "typescript"
+  ],
+  "homepage": "https://github.com/sinehypernova-0718/convect-sdk#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sinehypernova-0718/convect-sdk.git",
+    "directory": "packages/transports"
+  },
+  "bugs": {
+    "url": "https://github.com/sinehypernova-0718/convect-sdk/issues"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./mqtt": {
+      "types": "./dist/mqtt/index.d.ts",
+      "import": "./dist/mqtt/index.js",
+      "default": "./dist/mqtt/index.js"
+    },
+    "./serial": {
+      "types": "./dist/serial/index.d.ts",
+      "import": "./dist/serial/index.js",
+      "default": "./dist/serial/index.js"
+    },
+    "./webserial": {
+      "types": "./dist/webserial/index.d.ts",
+      "import": "./dist/webserial/index.js",
+      "default": "./dist/webserial/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc --watch --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "clean": "rimraf dist coverage tsconfig.tsbuildinfo",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write ."
+  },
+  "dependencies": {
+    "@convect/core": "workspace:*",
+    "@convect/protocol": "workspace:*",
+    "@convect/transport-mqtt": "workspace:*",
+    "@convect/transport-serial": "workspace:*",
+    "@convect/transport-webserial": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

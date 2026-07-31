@@ -1,0 +1,88 @@
+{
+  "name": "@convect/core",
+  "version": "0.1.0",
+  "description": "Core device lifecycle, connection management, and state handling for the Convect SDK.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "sideEffects": false,
+  "keywords": [
+    "convect",
+    "iot",
+    "sdk",
+    "device",
+    "connection",
+    "lifecycle",
+    "typescript"
+  ],
+  "homepage": "https://github.com/sinehypernova-0718/convect-sdk#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sinehypernova-0718/convect-sdk.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/sinehypernova-0718/convect-sdk/issues"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./device": {
+      "types": "./dist/device/index.d.ts",
+      "import": "./dist/device/index.js",
+      "default": "./dist/device/index.js"
+    },
+    "./lifecycle": {
+      "types": "./dist/lifecycle/index.d.ts",
+      "import": "./dist/lifecycle/index.js",
+      "default": "./dist/lifecycle/index.js"
+    },
+    "./connection": {
+      "types": "./dist/connection/index.d.ts",
+      "import": "./dist/connection/index.js",
+      "default": "./dist/connection/index.js"
+    },
+    "./errors": {
+      "types": "./dist/errors/index.d.ts",
+      "import": "./dist/errors/index.js",
+      "default": "./dist/errors/index.js"
+    },
+    "./events": {
+      "types": "./dist/events/index.d.ts",
+      "import": "./dist/events/index.js",
+      "default": "./dist/events/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsx watch src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "clean": "rimraf dist coverage tsconfig.tsbuildinfo",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write ."
+  },
+  "dependencies": {
+    "eventemitter3": "^5.0.0"
+  },
+  "peerDependencies": {
+    "@convect/protocol": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
