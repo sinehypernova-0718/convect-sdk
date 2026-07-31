@@ -1,58 +1,52 @@
 {
-  "$schema": "https://turborepo.com/schema.json",
+	"$schema": "https://turborepo.com/schema.json",
 
-  "tasks": {
-    "build": {
-      "dependsOn": ["^build"],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        "src/**",
-        "tsconfig*.json"
-      ],
-      "outputs": [
-        "dist/**"
-      ]
-    },
+	"tasks": {
+		"build": {
+			"dependsOn": ["^build"],
+			"inputs": ["$TURBO_DEFAULT$", "src/**", "tsconfig*.json"],
+			"outputs": ["dist/**"]
+		},
 
-    "dev": {
-      "cache": false,
-      "persistent": true
-    },
+		"dev": {
+			"cache": false,
+			"persistent": true
+		},
 
-    "watch": {
-      "cache": false,
-      "persistent": true
-    },
+		"watch": {
+			"cache": false,
+			"persistent": true
+		},
 
-    "lint": {
-      "dependsOn": ["^build"]
-    },
+		"lint": {
+			"dependsOn": ["^build"]
+		},
 
-    "typecheck": {
-      "dependsOn": ["^build"]
-    },
+		"typecheck": {
+			"dependsOn": ["^build"]
+		},
 
-    "test": {
-      "dependsOn": ["build"]
-    },
+		"test": {
+			"dependsOn": ["build"]
+		},
 
-    "clean": {
-      "cache": false
-    },
+		"clean": {
+			"cache": false
+		},
 
-    "format": {
-      "cache": false
-    },
+		"format": {
+			"cache": false
+		},
 
-    "format:check": {},
+		"format:check": {},
 
-    "lint:fix": {
-      "cache": false
-    },
+		"lint:fix": {
+			"cache": false
+		},
 
-    "test:watch": {
-      "cache": false,
-      "persistent": true
-    }
-  }
+		"test:watch": {
+			"cache": false,
+			"persistent": true
+		}
+	}
 }

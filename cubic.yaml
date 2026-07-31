@@ -24,7 +24,6 @@ reviews:
       maintainability, or users of the SDK.
 
   custom_rules:
-
     - name: Public API Stability
       description: |-
         Convect is an SDK consumed by external developers.
