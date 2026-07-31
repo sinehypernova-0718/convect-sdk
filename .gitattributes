@@ -1,0 +1,2 @@
+# Normalize text files to LF line endings on checkout and commit
+* text=auto eol=lf
