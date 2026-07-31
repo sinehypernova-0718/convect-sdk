@@ -40,6 +40,7 @@
     "typecheck": "turbo run typecheck",
     "dev": "turbo run dev",
     "clean": "turbo run clean",
+    "clean:all": "turbo run clean && rimraf dist && rimraf node_modules",
 
     "format": "prettier --write .",
     "format:check": "prettier --check ."
