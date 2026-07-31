@@ -1,0 +1,6 @@
+.turbo
+coverage
+dist
+node_modules
+docs/generated
+.github/test-metrics
