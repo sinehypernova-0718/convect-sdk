@@ -1,5 +1,5 @@
 {
-  "name": "@convect/transport-serial",
+  "name": "@convect/transport-webserial",
   "version": "0.1.0",
   "description": "Serial transport implementation for the Convect SDK.",
   "license": "Apache-2.0",
