@@ -41,9 +41,10 @@
 
     "typecheck": {
       "dependsOn": [
-        "build",
         "^build"
       ],
+      "outputs": []
+    },
       "outputs": []
     },
 
