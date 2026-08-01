@@ -1,27 +1,12 @@
 {
 	"files": [],
-
 	"references": [
-		{
-			"path": "./packages/core"
-		},
-		{
-			"path": "./packages/protocol"
-		},
-		{
-			"path": "./packages/sdk"
-		},
-		{
-			"path": "./packages/transports"
-		},
-		{
-			"path": "./packages/transports/transport-mqtt"
-		},
-		{
-			"path": "./packages/transports/transport-serial"
-		},
-		{
-			"path": "./packages/transports/transport-webserial"
-		}
+		{ "path": "./packages/core" },
+		{ "path": "./packages/protocol" },
+		{ "path": "./packages/sdk" },
+		{ "path": "./packages/transports" },
+		{ "path": "./packages/transports/transport-mqtt" },
+		{ "path": "./packages/transports/transport-serial" },
+		{ "path": "./packages/transports/transport-webserial" }
 	]
 }

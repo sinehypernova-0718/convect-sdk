@@ -8,7 +8,7 @@
 	"keywords": [
 		"convect",
 		"iot",
-		"mqtt",
+		"serial",
 		"transport",
 		"typescript"
 	],
@@ -22,31 +22,33 @@
 		"url": "https://github.com/sinehypernova-0718/convect-sdk/issues"
 	},
 	"engines": {
-		"node": "\u003e=24"
+		"node": ">=24"
 	},
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
-			"types": "./dist/index.d.ts",
-			"import": "./dist/index.js",
-			"default": "./dist/index.js"
-		}
+			"types": "./dist/index.d.mts",
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs",
+			"default": "./dist/index.mjs"
+		},
+		"./package.json": "./package.json"
 	},
 	"files": [
 		"dist",
-		"README.md"
+		"README.md",
+		"LICENSE"
 	],
 	"scripts": {
-		"build": "tsc -p tsconfig.build.json",
-		"dev": "tsc --watch --noEmit",
+		"build": "tsdown",
+		"dev": "tsdown --watch",
 		"typecheck": "tsc --noEmit",
 		"test": "vitest run",
 		"test:watch": "vitest",
 		"test:coverage": "vitest run --coverage",
-		"clean": "rimraf dist coverage tsconfig.tsbuildinfo",
+		"clean": "rimraf dist coverage",
 		"lint": "biome check .",
-		"lint:fix": "biome check --write ."
+		"lint:fix": "biome check --write .",
+		"prepack": "node ../../../scripts/copy-package-meta.mjs ."
 	},
 	"dependencies": {
 		"@convect/core": "workspace:*",

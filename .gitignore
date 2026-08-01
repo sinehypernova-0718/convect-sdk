@@ -46,3 +46,6 @@ ehthumbs.db
 # Package manager
 .npmrc.local
 .pnpmrc.local
+
+.claude
+.turbo

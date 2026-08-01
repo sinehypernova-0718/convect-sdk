@@ -26,54 +26,61 @@
 	"engines": {
 		"node": ">=24"
 	},
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
-			"types": "./dist/index.d.ts",
-			"import": "./dist/index.js",
-			"default": "./dist/index.js"
+			"types": "./dist/index.d.mts",
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs",
+			"default": "./dist/index.mjs"
 		},
 		"./device": {
-			"types": "./dist/device/index.d.ts",
-			"import": "./dist/device/index.js",
-			"default": "./dist/device/index.js"
+			"types": "./dist/device/index.d.mts",
+			"import": "./dist/device/index.mjs",
+			"require": "./dist/device/index.cjs",
+			"default": "./dist/device/index.mjs"
 		},
 		"./lifecycle": {
-			"types": "./dist/lifecycle/index.d.ts",
-			"import": "./dist/lifecycle/index.js",
-			"default": "./dist/lifecycle/index.js"
+			"types": "./dist/lifecycle/index.d.mts",
+			"import": "./dist/lifecycle/index.mjs",
+			"require": "./dist/lifecycle/index.cjs",
+			"default": "./dist/lifecycle/index.mjs"
 		},
 		"./connection": {
-			"types": "./dist/connection/index.d.ts",
-			"import": "./dist/connection/index.js",
-			"default": "./dist/connection/index.js"
+			"types": "./dist/connection/index.d.mts",
+			"import": "./dist/connection/index.mjs",
+			"require": "./dist/connection/index.cjs",
+			"default": "./dist/connection/index.mjs"
 		},
 		"./errors": {
-			"types": "./dist/errors/index.d.ts",
-			"import": "./dist/errors/index.js",
-			"default": "./dist/errors/index.js"
+			"types": "./dist/errors/index.d.mts",
+			"import": "./dist/errors/index.mjs",
+			"require": "./dist/errors/index.cjs",
+			"default": "./dist/errors/index.mjs"
 		},
 		"./events": {
-			"types": "./dist/events/index.d.ts",
-			"import": "./dist/events/index.js",
-			"default": "./dist/events/index.js"
-		}
+			"types": "./dist/events/index.d.mts",
+			"import": "./dist/events/index.mjs",
+			"require": "./dist/events/index.cjs",
+			"default": "./dist/events/index.mjs"
+		},
+		"./package.json": "./package.json"
 	},
 	"files": [
 		"dist",
-		"README.md"
+		"README.md",
+		"LICENSE"
 	],
 	"scripts": {
-		"build": "tsc -p tsconfig.build.json",
-		"dev": "tsx watch src/index.ts",
+		"build": "tsdown",
+		"dev": "tsdown --watch",
 		"typecheck": "tsc --noEmit",
 		"test": "vitest run",
 		"test:watch": "vitest",
 		"test:coverage": "vitest run --coverage",
-		"clean": "rimraf dist coverage tsconfig.tsbuildinfo",
+		"clean": "rimraf dist coverage",
 		"lint": "biome check .",
-		"lint:fix": "biome check --write ."
+		"lint:fix": "biome check --write .",
+		"prepack": "node ../../scripts/copy-package-meta.mjs ."
 	},
 	"dependencies": {
 		"eventemitter3": "^5.0.0"

@@ -26,44 +26,49 @@
 	"engines": {
 		"node": ">=24"
 	},
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
-			"types": "./dist/index.d.ts",
-			"import": "./dist/index.js",
-			"default": "./dist/index.js"
+			"types": "./dist/index.d.mts",
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs",
+			"default": "./dist/index.mjs"
 		},
 		"./mqtt": {
-			"types": "./dist/mqtt/index.d.ts",
-			"import": "./dist/mqtt/index.js",
-			"default": "./dist/mqtt/index.js"
+			"types": "./dist/mqtt/index.d.mts",
+			"import": "./dist/mqtt/index.mjs",
+			"require": "./dist/mqtt/index.cjs",
+			"default": "./dist/mqtt/index.mjs"
 		},
 		"./serial": {
-			"types": "./dist/serial/index.d.ts",
-			"import": "./dist/serial/index.js",
-			"default": "./dist/serial/index.js"
+			"types": "./dist/serial/index.d.mts",
+			"import": "./dist/serial/index.mjs",
+			"require": "./dist/serial/index.cjs",
+			"default": "./dist/serial/index.mjs"
 		},
 		"./webserial": {
-			"types": "./dist/webserial/index.d.ts",
-			"import": "./dist/webserial/index.js",
-			"default": "./dist/webserial/index.js"
-		}
+			"types": "./dist/webserial/index.d.mts",
+			"import": "./dist/webserial/index.mjs",
+			"require": "./dist/webserial/index.cjs",
+			"default": "./dist/webserial/index.mjs"
+		},
+		"./package.json": "./package.json"
 	},
 	"files": [
 		"dist",
-		"README.md"
+		"README.md",
+		"LICENSE"
 	],
 	"scripts": {
-		"build": "tsc -p tsconfig.build.json",
-		"dev": "tsc --watch --noEmit",
+		"build": "tsdown",
+		"dev": "tsdown --watch",
 		"typecheck": "tsc --noEmit",
 		"test": "vitest run",
 		"test:watch": "vitest",
 		"test:coverage": "vitest run --coverage",
-		"clean": "rimraf dist coverage tsconfig.tsbuildinfo",
+		"clean": "rimraf dist coverage",
 		"lint": "biome check .",
-		"lint:fix": "biome check --write ."
+		"lint:fix": "biome check --write .",
+		"prepack": "node ../../scripts/copy-package-meta.mjs ."
 	},
 	"dependencies": {
 		"@convect/core": "workspace:*",

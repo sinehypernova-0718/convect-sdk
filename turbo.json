@@ -5,6 +5,7 @@
 		"**/.env.local",
 		"**/package.json",
 		"**/tsconfig.json",
+		"**/tsdown.config.ts",
 		"**/biome.json",
 		"**/biome.jsonc"
 	],
