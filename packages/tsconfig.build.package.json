@@ -1,4 +1,4 @@
-﻿{
+{
 	"extends": "../tsconfig.build.base.json",
 	"compilerOptions": {
 		"composite": true

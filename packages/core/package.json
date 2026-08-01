@@ -1,4 +1,4 @@
-﻿{
+{
 	"name": "@convect/core",
 	"version": "0.1.0",
 	"description": "Core device lifecycle, connection management, and state handling for the Convect SDK.",

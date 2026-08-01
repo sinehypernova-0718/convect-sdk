@@ -1,4 +1,4 @@
-﻿{
+{
 	"name": "@convect/protocol",
 	"version": "0.1.0",
 	"description": "Protocol definitions, packet serialization, and communication primitives for the Convect SDK.",

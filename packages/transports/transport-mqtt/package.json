@@ -1,4 +1,4 @@
-﻿{
+{
 	"name": "@convect/transport-mqtt",
 	"version": "0.1.0",
 	"description": "MQTT transport implementation for the Convect SDK.",

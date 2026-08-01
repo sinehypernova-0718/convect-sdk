@@ -1,4 +1,4 @@
-﻿{
+{
 	"name": "@convect/transports",
 	"version": "0.1.0",
 	"description": "Collection of officially supported transport implementations for the Convect SDK.",
