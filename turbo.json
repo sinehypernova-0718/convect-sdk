@@ -1,77 +1,56 @@
 {
-  "$schema": "https://turborepo.dev/schema.json",
-  "globalDependencies": [
-    "**/.env",
-    "**/.env.local",
-    "**/package.json",
-    "**/tsconfig.json",
-    "**/biome.json",
-    "**/biome.jsonc"
-  ],
-  "globalEnv": [
-    "CI",
-    "NODE_ENV"
-  ],
-  "tasks": {
-    "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "dist/**"
-      ],
-      "cache": true
-    },
+	"$schema": "https://turborepo.dev/schema.json",
+	"globalDependencies": [
+		"**/.env",
+		"**/.env.local",
+		"**/package.json",
+		"**/tsconfig.json",
+		"**/biome.json",
+		"**/biome.jsonc"
+	],
+	"globalEnv": ["CI", "NODE_ENV"],
+	"tasks": {
+		"build": {
+			"dependsOn": ["^build"],
+			"outputs": ["dist/**"]
+		},
 
-    "dev": {
-      "cache": false,
-      "persistent": true
-    },
+		"dev": {
+			"cache": false,
+			"persistent": true
+		},
 
-    "lint": {
-      "outputs": []
-    },
-      "outputs": []
-    },
+		"lint": {
+			"outputs": []
+		},
 
-    "lint:fix": {
-      "cache": false
-    },
+		"lint:fix": {
+			"cache": false,
+			"outputs": []
+		},
 
-    "typecheck": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": []
-    },
-      "outputs": []
-    },
+		"typecheck": {
+			"dependsOn": ["^build"],
+			"outputs": []
+		},
 
-    "test": {
-      "dependsOn": [
-        "build"
-      ],
-      "outputs": [
-        "coverage/**"
-      ]
-    },
+		"test": {
+			"dependsOn": ["build"],
+			"outputs": ["coverage/**"]
+		},
 
-    "test:watch": {
-      "cache": false,
-      "persistent": true
-    },
+		"test:watch": {
+			"cache": false,
+			"persistent": true
+		},
 
-    "test:coverage": {
-      "dependsOn": [
-        "build"
-      ],
-      "outputs": [
-        "coverage/**"
-      ]
-    },
+		"test:coverage": {
+			"dependsOn": ["build"],
+			"outputs": ["coverage/**"]
+		},
 
-    "clean": {
-      "cache": false
-    }
-  }
+		"clean": {
+			"cache": false
+		}
+	}
 }

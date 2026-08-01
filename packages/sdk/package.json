@@ -1,59 +1,57 @@
-{
-  "name": "@convect/sdk",
-  "version": "0.1.0",
-  "description": "High-level developer SDK for building applications with Convect.",
-  "license": "Apache-2.0",
-
-  "type": "module",
-  "sideEffects": false,
-  "keywords": [
-    "convect",
-    "iot",
-    "sdk",
-    "typescript"
-  ],
-  "homepage": "https://github.com/sinehypernova-0718/convect-sdk#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sinehypernova-0718/convect-sdk.git",
-    "directory": "packages/sdk"
-  },
-  "bugs": {
-    "url": "https://github.com/sinehypernova-0718/convect-sdk/issues"
-  },
-  "engines": {
-    "node": ">=24"
-  },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
-    }
-  },
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
-  ],
-  "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "dev": "tsc --watch --noEmit",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage",
-    "clean": "rimraf dist coverage tsconfig.tsbuildinfo",
-    "lint": "biome check .",
-    "lint:fix": "biome check --write ."
-  },
-  "dependencies": {
-    "@convect/core": "workspace:*",
-    "@convect/protocol": "workspace:*"
-  },
-  "publishConfig": {
-    "access": "public"
-  }
+﻿{
+	"name": "@convect/sdk",
+	"version": "0.1.0",
+	"description": "High-level developer SDK for building applications with Convect.",
+	"license": "Apache-2.0",
+	"type": "module",
+	"sideEffects": false,
+	"keywords": [
+		"convect",
+		"iot",
+		"sdk",
+		"typescript"
+	],
+	"homepage": "https://github.com/sinehypernova-0718/convect-sdk#readme",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sinehypernova-0718/convect-sdk.git",
+		"directory": "packages/sdk"
+	},
+	"bugs": {
+		"url": "https://github.com/sinehypernova-0718/convect-sdk/issues"
+	},
+	"engines": {
+		"node": "\u003e=24"
+	},
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"default": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist",
+		"README.md"
+	],
+	"scripts": {
+		"build": "tsc -p tsconfig.build.json",
+		"dev": "tsc --watch --noEmit",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:coverage": "vitest run --coverage",
+		"clean": "rimraf dist coverage tsconfig.tsbuildinfo",
+		"lint": "biome check .",
+		"lint:fix": "biome check --write ."
+	},
+	"dependencies": {
+		"@convect/core": "workspace:*",
+		"@convect/protocol": "workspace:*"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
 }

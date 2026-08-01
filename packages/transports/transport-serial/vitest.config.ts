@@ -2,7 +2,7 @@
 import base from '../../../vitest.base';
 
 export default mergeConfig(base, {
-    test: {
-        name: '@convect/transport-serial',
-    },
+	test: {
+		name: '@convect/transport-serial',
+	},
 });

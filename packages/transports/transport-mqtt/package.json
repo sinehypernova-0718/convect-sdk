@@ -1,59 +1,58 @@
-{
-  "name": "@convect/transport-mqtt",
-  "version": "0.1.0",
-  "description": "MQTT transport implementation for the Convect SDK.",
-  "license": "Apache-2.0",
-  "type": "module",
-  "sideEffects": false,
-  "keywords": [
-    "convect",
-    "iot",
-    "mqtt",
-    "transport",
-    "typescript"
-  ],
-  "homepage": "https://github.com/sinehypernova-0718/convect-sdk#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sinehypernova-0718/convect-sdk.git",
-    "directory": "packages/transports/transport-mqtt"
-  },
-  "bugs": {
-    "url": "https://github.com/sinehypernova-0718/convect-sdk/issues"
-  },
-  "engines": {
-    "node": ">=24"
-  },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
-    }
-  },
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
-  ],
-  "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "dev": "tsc --watch --noEmit",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage",
-    "clean": "rimraf dist coverage tsconfig.tsbuildinfo",
-    "lint": "biome check .",
-    "lint:fix": "biome check --write ."
-  },
-  "dependencies": {
-    "@convect/core": "workspace:*",
-    "@convect/protocol": "workspace:*"
-  },
-  "publishConfig": {
-    "access": "public"
-  }
+﻿{
+	"name": "@convect/transport-mqtt",
+	"version": "0.1.0",
+	"description": "MQTT transport implementation for the Convect SDK.",
+	"license": "Apache-2.0",
+	"type": "module",
+	"sideEffects": false,
+	"keywords": [
+		"convect",
+		"iot",
+		"mqtt",
+		"transport",
+		"typescript"
+	],
+	"homepage": "https://github.com/sinehypernova-0718/convect-sdk#readme",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sinehypernova-0718/convect-sdk.git",
+		"directory": "packages/transports/transport-mqtt"
+	},
+	"bugs": {
+		"url": "https://github.com/sinehypernova-0718/convect-sdk/issues"
+	},
+	"engines": {
+		"node": "\u003e=24"
+	},
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"default": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist",
+		"README.md"
+	],
+	"scripts": {
+		"build": "tsc -p tsconfig.build.json",
+		"dev": "tsc --watch --noEmit",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:coverage": "vitest run --coverage",
+		"clean": "rimraf dist coverage tsconfig.tsbuildinfo",
+		"lint": "biome check .",
+		"lint:fix": "biome check --write ."
+	},
+	"dependencies": {
+		"@convect/core": "workspace:*",
+		"@convect/protocol": "workspace:*"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
 }
