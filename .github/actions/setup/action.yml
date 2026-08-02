@@ -4,9 +4,8 @@ description: |
 
   Performs:
   - Node.js setup for the specified version
-  - Corepack activation
-  - pnpm installation from packageManager
   - pnpm cache restoration
+  - Corepack enablement for pnpm
   - Dependency installation with frozen lockfile
 
 inputs:
@@ -28,11 +27,9 @@ runs:
 
     - name: Enable Corepack
       shell: bash
-      run: corepack enable
-
-    - name: Setup pnpm
-      shell: bash
-      run: corepack install
+      run: |
+        corepack enable
+        corepack prepare pnpm@$(node -e "console.log(require('./package.json').packageManager.split('@').pop())") --activate
 
     - name: Install dependencies
       shell: bash
