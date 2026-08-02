@@ -29,7 +29,9 @@ function deriveEntries(packageDir: string): Record<string, string> {
 	const distRoot = resolve(packageDir, 'dist');
 
 	for (const [key, value] of Object.entries(pkg.exports)) {
-		if (typeof value !== 'object' || value === null) continue;
+		if (typeof value !== 'object' || value === null) {
+			continue;
+		}
 
 		// Pick the first runtime target that resolves into this package's
 		// dist tree. Prefer the `import` condition, then `require`, then
@@ -37,12 +39,16 @@ function deriveEntries(packageDir: string): Record<string, string> {
 		// declaration file, and resolving it would generate a useless entry.
 		const cond = value as Record<string, string>;
 		const runtimeTarget = cond.import ?? cond.require ?? cond.default;
-		if (!runtimeTarget) continue;
+		if (!runtimeTarget) {
+			continue;
+		}
 
 		// Only consider entries that live in this package's dist tree.
 		const stripped = runtimeTarget.replace(/^\.\/dist/, '');
 		const resolved = resolve(distRoot, `.${stripped}`);
-		if (!resolved.startsWith(distRoot)) continue;
+		if (!resolved.startsWith(distRoot)) {
+			continue;
+		}
 
 		// Map "./foo/bar" → "./src/foo/bar/index.ts". The entry name is the export
 		// subpath with a `/index` suffix preserved, so tsdown emits each chunk

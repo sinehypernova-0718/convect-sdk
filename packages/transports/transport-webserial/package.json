@@ -1,4 +1,4 @@
-{
+﻿{
 	"name": "@convect/transport-webserial",
 	"version": "0.1.0",
 	"description": "Web Serial transport implementation for the Convect SDK.",
@@ -46,8 +46,10 @@
 		"test:watch": "vitest",
 		"test:coverage": "vitest run --coverage",
 		"clean": "rimraf dist coverage",
-		"lint": "biome check .",
-		"lint:fix": "biome check --write .",
+		"format": "biome format .",
+		"format:fix": "biome format . --fix",
+		"lint": "biome lint .",
+		"lint:fix": "biome lint . --fix",
 		"prepack": "node ../../../scripts/copy-package-meta.mjs ."
 	},
 	"dependencies": {

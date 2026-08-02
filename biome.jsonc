@@ -23,13 +23,157 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"preset": "recommended"
+			"preset": "recommended",
+
+			"complexity": {
+				"noBannedTypes": "error",
+				"noExcessiveCognitiveComplexity": {
+					"level": "error",
+					"options": {
+						"maxAllowedComplexity": 20
+					}
+				},
+				"noExcessiveLinesPerFunction": {
+					"level": "warn",
+					"options": {
+						"maxLines": 75
+					}
+				},
+				"useLiteralKeys": "error",
+				"useArrowFunction": "error",
+				"useFlatMap": "error",
+				"useOptionalChain": "error",
+				"useRegexLiterals": "error",
+				"useSimplifiedLogicExpression": "error",
+				"useNumericLiterals": "error"
+			},
+
+			"correctness": {
+				"useImportExtensions": "error",
+				"noSwitchDeclarations": "error",
+				"useIsNan": "error",
+				"useYield": "error"
+			},
+
+			"nursery": {
+				"useExhaustiveSwitchCases": "error",
+				"noFloatingPromises": "error",
+				"useNullishCoalescing": "error"
+			},
+
+			"suspicious": {
+				"useAwait": "error",
+				"noArrayIndexKey": "warn",
+				"noConsole": "warn",
+				"noExplicitAny": "error",
+				"useErrorMessage": "error"
+			},
+
+			"style": {
+				"useAsConstAssertion": "error",
+				"useNodejsImportProtocol": "error",
+				"useBlockStatements": "error",
+				"useConsistentArrayType": "error",
+				"useConsistentBuiltinInstantiation": "error",
+				"useConsistentMemberAccessibility": "error",
+				"useConsistentObjectDefinitions": "error",
+				"useConst": "error",
+				"useDefaultParameterLast": "error",
+				"useExportType": "error",
+				"useImportType": "error",
+				"useNamingConvention": "error",
+				"useNumberNamespace": "error",
+				"useReadonlyClassProperties": "warn",
+				"useShorthandAssign": "error",
+				"useShorthandFunctionType": "error",
+				"useTemplate": "error",
+				"useThrowOnlyError": "error"
+			},
+
+			"performance": {
+				"noAccumulatingSpread": "warn",
+				"noDelete": "warn"
+			},
+
+			"security": {
+				"noGlobalEval": "error"
+			}
 		}
 	},
 
 	"assist": {
-		"enabled": true
+		"enabled": true,
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
 	},
+
+	"overrides": [
+		{
+			"includes": ["scripts/**"],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noConsole": "off"
+					},
+					"complexity": {
+						"noExcessiveCognitiveComplexity": "off",
+						"noExcessiveLinesPerFunction": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": [
+				"**/*.test.ts",
+				"**/*.test.tsx",
+				"**/*.spec.ts",
+				"**/*.spec.tsx",
+				"**/__tests__/**"
+			],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noConsole": "off"
+					},
+					"complexity": {
+						"noExcessiveCognitiveComplexity": "off",
+						"noExcessiveLinesPerFunction": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": [
+				"**/*.config.js",
+				"**/*.config.cjs",
+				"**/*.config.mjs",
+				"**/*.config.ts",
+				"tsdown.config.ts",
+				"tsdown.config.base.ts",
+				"vitest.config.ts",
+				"vitest.workspace.ts"
+			],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noConsole": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": ["**/*.d.ts", "**/*.d.mts", "**/*.d.cts"],
+			"linter": {
+				"enabled": false
+			},
+			"formatter": {
+				"enabled": false
+			}
+		}
+	],
 
 	"javascript": {
 		"formatter": {
