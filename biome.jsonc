@@ -54,7 +54,8 @@
 					"options": {
 						"forceJsExtensions": true
 					}
-				},				"noSwitchDeclarations": "error",
+				},				
+				"noSwitchDeclarations": "error",
 				"useIsNan": "error",
 				"useYield": "error"
 			},
