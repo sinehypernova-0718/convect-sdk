@@ -82,7 +82,7 @@
 		"format:fix": "biome format . --fix",
 		"lint": "biome lint .",
 		"lint:fix": "biome lint . --fix",
-		"prepack": "node ../../scripts/copy-package-meta.mjs ."
+		"prepack": "node ../../scripts/copy-package-meta.mjs -t packages/core"
 	},
 	"dependencies": {
 		"eventemitter3": "^5.0.0"

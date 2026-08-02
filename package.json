@@ -103,7 +103,7 @@
 		"test:coverage:transport-webserial": "turbo run test:coverage --filter=@convect/transport-webserial",
 		"clean:build": "turbo run clean",
 		"clean:nuke": "node scripts/nuke-workspace.mjs",
-		"clean:nuke:dry": "node scripts/nuke-workspace.cjs --dry-run"
+		"clean:nuke:dry": "node scripts/nuke-workspace.mjs --dry-run"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.6",
