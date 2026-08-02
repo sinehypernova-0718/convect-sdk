@@ -1,0 +1,39 @@
+name: Setup Repository
+description: |
+  Initialize the repository environment for CI workflows.
+
+  Performs:
+  - Node.js setup for the specified version
+  - Corepack activation
+  - pnpm installation from packageManager
+  - pnpm cache restoration
+  - Dependency installation with frozen lockfile
+
+inputs:
+  node-version:
+    description: Node.js version to use
+    required: true
+    type: string
+
+runs:
+  using: composite
+
+  steps:
+    - name: Setup Node.js ${{ inputs.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: pnpm
+        cache-dependency-path: pnpm-lock.yaml
+
+    - name: Enable Corepack
+      shell: bash
+      run: corepack enable
+
+    - name: Setup pnpm
+      shell: bash
+      run: corepack install
+
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile
