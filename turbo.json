@@ -1,0 +1,57 @@
+{
+	"$schema": "https://turborepo.dev/schema.json",
+	"globalDependencies": [
+		"**/.env",
+		"**/.env.local",
+		"**/package.json",
+		"**/tsconfig.json",
+		"**/tsdown.config.ts",
+		"**/biome.json",
+		"**/biome.jsonc"
+	],
+	"globalEnv": ["CI", "NODE_ENV"],
+	"tasks": {
+		"build": {
+			"dependsOn": ["^build"],
+			"outputs": ["dist/**"]
+		},
+
+		"dev": {
+			"cache": false,
+			"persistent": true
+		},
+
+		"lint": {
+			"outputs": []
+		},
+
+		"lint:fix": {
+			"cache": false,
+			"outputs": []
+		},
+
+		"typecheck": {
+			"dependsOn": ["^build"],
+			"outputs": []
+		},
+
+		"test": {
+			"dependsOn": ["build"],
+			"outputs": ["coverage/**"]
+		},
+
+		"test:watch": {
+			"cache": false,
+			"persistent": true
+		},
+
+		"test:coverage": {
+			"dependsOn": ["build"],
+			"outputs": ["coverage/**"]
+		},
+
+		"clean": {
+			"cache": false
+		}
+	}
+}

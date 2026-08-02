@@ -1,0 +1,62 @@
+{
+	"name": "@convect/transport-mqtt",
+	"version": "0.1.0",
+	"description": "MQTT transport implementation for the Convect SDK.",
+	"license": "Apache-2.0",
+	"type": "module",
+	"sideEffects": false,
+	"keywords": [
+		"convect",
+		"iot",
+		"mqtt",
+		"transport",
+		"typescript"
+	],
+	"homepage": "https://github.com/sinehypernova-0718/convect-sdk#readme",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sinehypernova-0718/convect-sdk.git",
+		"directory": "packages/transports/transport-mqtt"
+	},
+	"bugs": {
+		"url": "https://github.com/sinehypernova-0718/convect-sdk/issues"
+	},
+	"engines": {
+		"node": ">=24"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.mts",
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs",
+			"default": "./dist/index.mjs"
+		},
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"dist",
+		"README.md",
+		"LICENSE"
+	],
+	"scripts": {
+		"build": "tsdown",
+		"dev": "tsdown --watch",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:coverage": "vitest run --coverage",
+		"clean": "rimraf dist coverage",
+		"format": "biome format .",
+		"format:fix": "biome format . --fix",
+		"lint": "biome lint .",
+		"lint:fix": "biome lint . --fix",
+		"prepack": "node ../../../scripts/copy-package-meta.mjs -t packages/transports/transport-mqtt"
+	},
+	"dependencies": {
+		"@convect/core": "workspace:*",
+		"@convect/protocol": "workspace:*"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}

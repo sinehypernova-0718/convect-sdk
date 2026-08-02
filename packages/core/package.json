@@ -1,0 +1,96 @@
+{
+	"name": "@convect/core",
+	"version": "0.1.0",
+	"description": "Core device lifecycle, connection management, and state handling for the Convect SDK.",
+	"license": "Apache-2.0",
+	"type": "module",
+	"sideEffects": false,
+	"keywords": [
+		"convect",
+		"iot",
+		"sdk",
+		"device",
+		"connection",
+		"lifecycle",
+		"typescript"
+	],
+	"homepage": "https://github.com/sinehypernova-0718/convect-sdk#readme",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sinehypernova-0718/convect-sdk.git",
+		"directory": "packages/core"
+	},
+	"bugs": {
+		"url": "https://github.com/sinehypernova-0718/convect-sdk/issues"
+	},
+	"engines": {
+		"node": ">=24"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.mts",
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs",
+			"default": "./dist/index.mjs"
+		},
+		"./device": {
+			"types": "./dist/device/index.d.mts",
+			"import": "./dist/device/index.mjs",
+			"require": "./dist/device/index.cjs",
+			"default": "./dist/device/index.mjs"
+		},
+		"./lifecycle": {
+			"types": "./dist/lifecycle/index.d.mts",
+			"import": "./dist/lifecycle/index.mjs",
+			"require": "./dist/lifecycle/index.cjs",
+			"default": "./dist/lifecycle/index.mjs"
+		},
+		"./connection": {
+			"types": "./dist/connection/index.d.mts",
+			"import": "./dist/connection/index.mjs",
+			"require": "./dist/connection/index.cjs",
+			"default": "./dist/connection/index.mjs"
+		},
+		"./errors": {
+			"types": "./dist/errors/index.d.mts",
+			"import": "./dist/errors/index.mjs",
+			"require": "./dist/errors/index.cjs",
+			"default": "./dist/errors/index.mjs"
+		},
+		"./events": {
+			"types": "./dist/events/index.d.mts",
+			"import": "./dist/events/index.mjs",
+			"require": "./dist/events/index.cjs",
+			"default": "./dist/events/index.mjs"
+		},
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"dist",
+		"README.md",
+		"LICENSE"
+	],
+	"scripts": {
+		"build": "tsdown",
+		"dev": "tsdown --watch",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:coverage": "vitest run --coverage",
+		"clean": "rimraf dist coverage",
+		"format": "biome format .",
+		"format:fix": "biome format . --fix",
+		"lint": "biome lint .",
+		"lint:fix": "biome lint . --fix",
+		"prepack": "node ../../scripts/copy-package-meta.mjs -t packages/core"
+	},
+	"dependencies": {
+		"eventemitter3": "^5.0.0"
+	},
+	"peerDependencies": {
+		"@convect/protocol": "workspace:*"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}

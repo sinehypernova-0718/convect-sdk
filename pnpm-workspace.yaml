@@ -1,0 +1,25 @@
+packages:
+  - "packages/*"
+  - "packages/transports/*"
+  - "apps/*"
+  - "examples/*"
+
+allowBuilds:
+  esbuild: true
+
+# Dependency resolution
+prefer-workspace-packages: true
+ 
+# Hoisting strategy for optimal node_modules structure
+shamefully-hoist: false
+ 
+# Link workspace packages
+link-workspace-packages: true
+ 
+# Install strategy
+auto-install-peers: true
+ 
+# Override settings per package can be done via .npmrc in package directory
+
+onlyBuiltDependencies:
+  - esbuild
