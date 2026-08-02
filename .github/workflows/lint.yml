@@ -1,0 +1,39 @@
+name: Lint
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+  merge_group:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # Lint runs on a single Node version (24) only.
+    # Biome diagnostics are independent of the runtime and produce
+    # identical results across Node versions. Linting only on the LTS
+    # version reduces CI time without sacrificing validation confidence.
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup repository
+        uses: ./.github/actions/setup
+        with:
+          node-version: 24
+
+      - name: Lint
+        run: pnpm lint
