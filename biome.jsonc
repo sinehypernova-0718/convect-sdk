@@ -49,7 +49,12 @@
 			},
 
 			"correctness": {
-				"useImportExtensions": "error",
+				"useImportExtensions": {
+					"level": "error",
+					"options": {
+						"forceJsExtensions": true
+					}
+				},				
 				"noSwitchDeclarations": "error",
 				"useIsNan": "error",
 				"useYield": "error"
