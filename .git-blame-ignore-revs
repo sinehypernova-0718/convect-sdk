@@ -1,3 +1,6 @@
 # Add formatting-only commit hashes here.
 # Example:
 # abcdef1234567890abcdef1234567890abcdef12
+
+# ci: Format and Lint the the codebase using commands (#15)
+2c59553e08a838afd830bb7482213d6102d0d0ab
