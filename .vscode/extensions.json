@@ -1,0 +1,18 @@
+{
+	"recommendations": [
+		"biomejs.biome",
+		"streetsidesoftware.code-spell-checker",
+		"EditorConfig.EditorConfig",
+		"vitest.explorer",
+		"ryanluker.vscode-coverage-gutters",
+		"redhat.vscode-yaml",
+		"christian-kohler.npm-intellisense",
+		"usernamehw.errorlens",
+		"eamodio.gitlens"
+	],
+	"unwantedRecommendations": [
+		"esbenp.prettier-vscode",
+		"dbaeumer.vscode-eslint",
+		"Vue.volar"
+	]
+}
