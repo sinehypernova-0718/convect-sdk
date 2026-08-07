@@ -1,0 +1,98 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Vitest: current file",
+			"type": "node",
+			"request": "launch",
+			"runtimeExecutable": "pnpm",
+			"runtimeArgs": ["exec", "vitest", "run", "${relativeFile}"],
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen",
+			"skipFiles": ["<node_internals>/**"],
+			"cwd": "${workspaceFolder}"
+		},
+		{
+			"name": "Vitest: current file (watch)",
+			"type": "node",
+			"request": "launch",
+			"runtimeExecutable": "pnpm",
+			"runtimeArgs": ["exec", "vitest", "${relativeFile}"],
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen",
+			"skipFiles": ["<node_internals>/**"],
+			"cwd": "${workspaceFolder}"
+		},
+		{
+			"name": "Vitest: workspace (all packages)",
+			"type": "node",
+			"request": "launch",
+			"runtimeExecutable": "pnpm",
+			"runtimeArgs": ["exec", "vitest", "run", "--workspace", "vitest.workspace.ts"],
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen",
+			"skipFiles": ["<node_internals>/**"],
+			"cwd": "${workspaceFolder}"
+		},
+		{
+			"name": "tsdown: build current package (watch)",
+			"type": "node",
+			"request": "launch",
+			"runtimeExecutable": "pnpm",
+			"runtimeArgs": ["exec", "tsdown", "--watch"],
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen",
+			"skipFiles": ["<node_internals>/**"],
+			"cwd": "${fileDirname}"
+		},
+		{
+			"name": "Attach to running convect process",
+			"type": "node",
+			"request": "attach",
+			"processId": "${command:PickProcess}",
+			"skipFiles": ["<node_internals>/**"],
+			"restart": true
+		},
+		{
+			"name": "Attach to Node (port 9229)",
+			"type": "node",
+			"request": "attach",
+			"port": 9229,
+			"address": "localhost",
+			"restart": true,
+			"sourceMaps": true,
+			"skipFiles": ["<node_internals>/**"],
+			"resolveSourceMapLocations": [
+				"${workspaceFolder}/**",
+				"!**/node_modules/**",
+				"!**/dist/**",
+				"!**/.turbo/**"
+			]
+		}
+	]
+	/**
+		How this works:
+		- "Vitest: current file" / "(watch)" run the file open in the active editor
+		  through the workspace's own vitest binary. Each package (core, protocol,
+		  sdk, transports/transport-mqtt, transport-serial, transport-webserial)
+		  has its own vitest.config.ts, and vitest resolves the nearest one
+		  automatically based on the file path — no per-package config needed here.
+		- "Vitest: workspace (all packages)" runs every package's suite at once via
+		  the root vitest.workspace.ts.
+		- "tsdown: build current package (watch)" runs tsdown from whichever
+		  package directory the active file lives in, so it picks up that
+		  package's own tsdown.config.ts (which extends tsdown.config.base.ts).
+		- "Attach to running convect process" prompts you to pick a live Node
+		  process — useful when a package was started manually with --inspect.
+		- "Attach to Node (port 9229)" attaches to a fixed debug port; pair it
+		  with any script started via `node --inspect=9229` in one of the layers
+		  (transports, protocol, core, sdk).
+
+		Note: there is no CLI entrypoint or dev-server script assumed here —
+		if package.json defines a "dev" or similar script once you've set one
+		up, it's worth adding a matching launch config for it.
+	*/
+}
