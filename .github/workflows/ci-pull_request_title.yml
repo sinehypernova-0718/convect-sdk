@@ -26,7 +26,7 @@ jobs:
           TYPES="feat|fix|perf|test|docs|refactor|build|ci|chore"
           SCOPES="core|protocol|sdk|transports|cli|examples|docs|ci|build"
 
-          TITLE_REGEX="^(${TYPES})(\(${SCOPES}\))?: [A-Z].+$"
+          TITLE_REGEX="^(${TYPES})(\((${SCOPES})\))?: [A-Z].+$"
 
           if [[ ! "$PR_TITLE" =~ $TITLE_REGEX ]]; then
             echo ""
