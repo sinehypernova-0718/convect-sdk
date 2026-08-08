@@ -58,6 +58,38 @@ describe('DeviceId', () => {
 		it('should throw InvalidDeviceIdError for object', () => {
 			expect(() => DeviceId.parse({})).toThrow(InvalidDeviceIdError);
 		});
+
+		it('should throw InvalidDeviceIdError for malformed null-prototype objects whose toString throws', () => {
+			const bomb = Object.create(null);
+			(bomb as { toString: () => unknown }).toString = (): never => {
+				throw new Error('toString should not be called');
+			};
+			expect(() => DeviceId.parse(bomb)).toThrow(InvalidDeviceIdError);
+		});
+
+		it('should throw InvalidDeviceIdError for objects whose toString returns a non-string', () => {
+			const bomb = Object.create(null);
+			(bomb as { toString: () => unknown }).toString = (): unknown => ({ polluted: true });
+			expect(() => DeviceId.parse(bomb)).toThrow(InvalidDeviceIdError);
+		});
+
+		it('should throw InvalidDeviceIdError for symbols', () => {
+			expect(() => DeviceId.parse(Symbol('x'))).toThrow(InvalidDeviceIdError);
+		});
+
+		it('should use a generic message for non-string values', () => {
+			expect(() => DeviceId.parse(42)).toThrow(
+				'Invalid device ID: value must be a non-empty string',
+			);
+			expect(() => DeviceId.parse(null)).toThrow(
+				'Invalid device ID: value must be a non-empty string',
+			);
+		});
+
+		it('should echo the offending string for empty/whitespace strings', () => {
+			expect(() => DeviceId.parse('')).toThrow("Invalid device ID: ''");
+			expect(() => DeviceId.parse('   ')).toThrow("Invalid device ID: '   '");
+		});
 	});
 
 	describe('isValid', () => {

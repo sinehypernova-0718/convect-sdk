@@ -36,8 +36,11 @@ export class DeviceId {
 	 * @throws InvalidDeviceIdError if validation fails
 	 */
 	static parse(value: unknown): DeviceId {
-		if (!DeviceId.isValid(value)) {
-			throw new InvalidDeviceIdError(`Invalid device ID: '${String(value)}'`);
+		if (typeof value !== 'string') {
+			throw new InvalidDeviceIdError('Invalid device ID: value must be a non-empty string');
+		}
+		if (value.trim().length === 0) {
+			throw new InvalidDeviceIdError(`Invalid device ID: '${value}'`);
 		}
 		return new DeviceId(value);
 	}
