@@ -89,10 +89,18 @@
 				"useNamingConvention": {
 					"level": "error",
 					"options": {
+						"strictCase": false,
 						"conventions": [
 							{
 								"selector": {
 									"kind": "enumMember"
+								},
+								"formats": ["CONSTANT_CASE"]
+							},
+							{
+								"selector": {
+									"kind": "classProperty",
+									"modifiers": ["static", "readonly"]
 								},
 								"formats": ["CONSTANT_CASE"]
 							}
