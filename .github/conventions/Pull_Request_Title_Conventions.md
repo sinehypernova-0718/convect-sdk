@@ -42,7 +42,7 @@
 
 ## 🎯 Scope (Optional)
 
-Use a scope **only** when the change clearly belongs to a specific part of the project.  
+Use a scope **only** when the change clearly belongs to a specific part of the project.
 If the change spans multiple areas or is unclear, simply omit the scope.
 
 ### Supported Scopes
@@ -52,7 +52,7 @@ If the change spans multiple areas or is unclear, simply omit the scope.
 | `core`      | Core functionality and internal logic   |
 | `protocol`  | Device communication protocol changes   |
 | `sdk`       | Public SDK changes                      |
-| `transport` | Communication transport implementations |
+| `transports`| Communication transport implementations |
 | `cli`       | Command-line interface changes          |
 | `examples`  | Example applications and demos          |
 | `docs`      | Documentation changes                   |
