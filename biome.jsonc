@@ -86,7 +86,19 @@
 				"useDefaultParameterLast": "error",
 				"useExportType": "error",
 				"useImportType": "error",
-				"useNamingConvention": "error",
+				"useNamingConvention": {
+					"level": "error",
+					"options": {
+						"conventions": [
+							{
+								"selector": {
+									"kind": "enumMember"
+								},
+								"formats": ["CONSTANT_CASE"]
+							}
+						]
+					}
+				},
 				"useNumberNamespace": "error",
 				"useReadonlyClassProperties": "warn",
 				"useShorthandAssign": "error",
