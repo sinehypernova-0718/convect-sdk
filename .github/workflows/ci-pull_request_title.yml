@@ -26,7 +26,11 @@ jobs:
           TYPES="feat|fix|perf|test|docs|refactor|build|ci|chore"
           SCOPES="core|protocol|sdk|transports|cli|examples|docs|ci|build"
 
-          TITLE_REGEX="^(${TYPES})(\((${SCOPES})\))?: [A-Z].+$"
+          # NOTE: the scope alternation must be wrapped in its own group
+          # \((${SCOPES})\) -- not (\(${SCOPES}\)) -- otherwise the
+          # trailing "?" only binds to the last alternative in SCOPES
+          # and scoped titles can fail to match.
+          TITLE_REGEX="^(${TYPES})(\((${SCOPES})\))?: [A-Z](.*[^.!? ])?$"
 
           if [[ ! "$PR_TITLE" =~ $TITLE_REGEX ]]; then
             echo ""
@@ -46,12 +50,8 @@ jobs:
             echo "Allowed scopes:"
             echo "  core protocol sdk transports cli examples docs ci build"
             echo ""
-            exit 1
-          fi
-
-          if [[ "$PR_TITLE" == *. ]]; then
-            echo ""
-            echo "❌ PR title summary must not end with a period."
+            echo "Summary must start with a capital letter, use imperative"
+            echo "present tense, and must not end with '.', '!', '?', or a space."
             echo ""
             exit 1
           fi
