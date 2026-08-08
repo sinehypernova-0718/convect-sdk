@@ -44,6 +44,10 @@ importers:
       eventemitter3:
         specifier: ^5.0.0
         version: 5.0.4
+    devDependencies:
+      '@types/node':
+        specifier: 26.1.2
+        version: 26.1.2
 
   packages/protocol: {}
 
