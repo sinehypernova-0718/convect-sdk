@@ -23,14 +23,7 @@ jobs:
           echo "Checking PR title:"
           echo "$PR_TITLE"
 
-          TYPES="feat|fix|perf|test|docs|refactor|build|ci|chore"
-          SCOPES="core|protocol|sdk|transports|cli|examples|docs|ci|build"
-
-          # NOTE: the scope alternation must be wrapped in its own group
-          # \((${SCOPES})\) -- not (\(${SCOPES}\)) -- otherwise the
-          # trailing "?" only binds to the last alternative in SCOPES
-          # and scoped titles can fail to match.
-          TITLE_REGEX="^(${TYPES})(\\(${SCOPES}\\))?: [A-Z].*$"
+          TITLE_REGEX="^(feat|fix|perf|test|docs|refactor|build|ci|chore)(\((core|protocol|sdk|transports|cli|examples|docs|ci|build)\))?!?: .+$"
 
           if [[ ! "$PR_TITLE" =~ $TITLE_REGEX ]]; then
             echo ""
