@@ -1,4 +1,4 @@
-name: PR Title Check
+name: "PR Title Check"
 
 on:
   pull_request_target:
@@ -6,47 +6,74 @@ on:
       - opened
       - edited
       - synchronize
+      - reopened
 
 permissions:
   pull-requests: read
 
 jobs:
   validate-pr-title:
-    name: Validate PR title
+    name: Validate PR Title Format
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check PR title format
+      - name: Validate PR Title Syntax
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
         run: |
-          echo "Checking PR title:"
-          echo "$PR_TITLE"
+          echo "=================================================="
+          echo "🔍 Checking PR Title: \"$PR_TITLE\""
+          echo "=================================================="
 
-          TITLE_REGEX="^(?:feat|fix|perf|test|docs|refactor|build|ci|chore)(?:\((?:core|protocol|sdk|transports|cli|examples|docs|ci|build)\))?!:\s[A-Z].+$"
+          # Define allowed types and scopes
+          TYPES="feat|fix|perf|test|docs|refactor|build|ci|chore"
+          SCOPES="core|protocol|sdk|transports|cli|examples|docs|ci|build"
+
+          # POSIX Extended Regex compatible with Bash [[ ... =~ ... ]]
+          TITLE_REGEX="^(${TYPES})(\(${SCOPES}\))?!:\s[A-Z].+$"
 
           if [[ ! "$PR_TITLE" =~ $TITLE_REGEX ]]; then
             echo ""
-            echo "❌ Invalid PR title format."
+            echo "❌ ERROR: PR Title does not follow Conventional Commits guidelines!"
+            echo "------------------------------------------------------------------"
             echo ""
-            echo "Expected:"
-            echo "<type>(<scope>): <summary>"
+            echo "🛠️  HOW TO FIX THIS:"
+            echo "1. Go to the top of this Pull Request page."
+            echo "2. Click 'Edit' next to the PR title."
+            echo "3. Rename your title using the structure below."
             echo ""
-            echo "Examples:"
-            echo "  feat(protocol): Add device registration messages"
-            echo "  fix(core): Handle reconnect failures"
-            echo "  docs: Improve installation guide"
+            echo "📌 EXPECTED FORMAT:"
+            echo "   <type>(<scope>): <Capitalized description>"
+            echo "   <type>!: <Capitalized description for breaking changes>"
             echo ""
-            echo "Allowed types:"
-            echo "  feat fix perf test docs refactor build ci chore"
+            echo "📋 ALLOWED TYPES:"
+            echo "   • feat      : A new feature"
+            echo "   • fix       : A bug fix"
+            echo "   • perf      : A code change that improves performance"
+            echo "   • test      : Adding or updating tests"
+            echo "   • docs      : Documentation changes only"
+            echo "   • refactor  : Code changes that neither fix bugs nor add features"
+            echo "   • build     : Changes affecting the build system or dependencies"
+            echo "   • ci        : Changes to CI configuration scripts"
+            echo "   • chore     : Other changes that don't modify src or test files"
             echo ""
-            echo "Allowed scopes:"
-            echo "  core protocol sdk transports cli examples docs ci build"
+            echo "🎯 ALLOWED SCOPES (Optional):"
+            echo "   • core | protocol | sdk | transports | cli | examples | docs | ci | build"
             echo ""
-            echo "Summary must start with a capital letter, use imperative"
-            echo "present tense, and must not end with '.', '!', '?', or a space."
+            echo "⚠️  DESCRIPTION RULES:"
+            echo "   • MUST start with a Capital letter (e.g., 'Add', 'Fix', 'Update')."
+            echo "   • MUST have a space after the colon ':'."
             echo ""
+            echo "💡 VALID EXAMPLES:"
+            echo "   ✅ feat(protocol): Add device registration messages"
+            echo "   ✅ fix(core): Handle reconnect failures"
+            echo "   ✅ fix(cli)!: Drop legacy flag support"
+            echo "   ✅ docs: Improve installation guide"
+            echo ""
+            echo "------------------------------------------------------------------"
             exit 1
           fi
 
-          echo "✅ PR title follows the convention."
+          echo ""
+          echo "✅ Success! PR title complies with Conventional Commits rules."
+
