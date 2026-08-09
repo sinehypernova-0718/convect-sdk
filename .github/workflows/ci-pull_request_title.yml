@@ -30,7 +30,7 @@ jobs:
           # \((${SCOPES})\) -- not (\(${SCOPES}\)) -- otherwise the
           # trailing "?" only binds to the last alternative in SCOPES
           # and scoped titles can fail to match.
-          TITLE_REGEX="^(${TYPES})(\((${SCOPES})\))?: [A-Z](.*[^.!? ])?$"
+          TITLE_REGEX="^(${TYPES})(\\(${SCOPES}\\))?: [A-Z].*$"
 
           if [[ ! "$PR_TITLE" =~ $TITLE_REGEX ]]; then
             echo ""
