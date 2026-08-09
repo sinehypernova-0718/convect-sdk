@@ -23,7 +23,7 @@ jobs:
           echo "Checking PR title:"
           echo "$PR_TITLE"
 
-          TITLE_REGEX="^(feat|fix|perf|test|docs|refactor|build|ci|chore)(\((core|protocol|sdk|transports|cli|examples|docs|ci|build)\))?!?: .+$"
+          TITLE_REGEX="^(?:feat|fix|perf|test|docs|refactor|build|ci|chore)(?:\((?:core|protocol|sdk|transports|cli|examples|docs|ci|build)\))?!:\s[A-Z].+$"
 
           if [[ ! "$PR_TITLE" =~ $TITLE_REGEX ]]; then
             echo ""
