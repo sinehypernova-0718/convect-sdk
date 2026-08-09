@@ -1,17 +1,4 @@
-name: PR Title Check
-
-on:
-  pull_request_target:
-    types:
-      - opened
-      - edited
-      - synchronize
-
-permissions:
-  pull-requests: read
-
-jobs:
-  validate-pr-title:name: "PR Title Check"
+name: "PR Title Check"
 
 on:
   pull_request_target:
@@ -42,8 +29,8 @@ jobs:
           TYPES="feat|fix|perf|test|docs|refactor|build|ci|chore"
           SCOPES="core|protocol|sdk|transports|cli|examples|docs|ci|build"
 
-          # POSIX Extended Regex compatible with Bash [[ ... =~ ... ]]
-          TITLE_REGEX="^(${TYPES})(\(${SCOPES}\))?!:\s[A-Z].+$"
+          # Uses a literal space ' ' after the colon instead of '\s' for POSIX regex compatibility
+          TITLE_REGEX="^(${TYPES})(\(${SCOPES}\))?!: [A-Z].+$"
 
           if [[ ! "$PR_TITLE" =~ $TITLE_REGEX ]]; then
             echo ""
@@ -74,12 +61,12 @@ jobs:
             echo "   • core | protocol | sdk | transports | cli | examples | docs | ci | build"
             echo ""
             echo "⚠️  DESCRIPTION RULES:"
-            echo "   • MUST start with a Capital letter (e.g., 'Add', 'Fix', 'Update')."
+            echo "   • MUST start with a Capital letter (e.g., 'Add', 'Fix', 'Enhance')."
             echo "   • MUST have a space after the colon ':'."
             echo ""
             echo "💡 VALID EXAMPLES:"
             echo "   ✅ feat(protocol): Add device registration messages"
-            echo "   ✅ fix(core): Handle reconnect failures"
+            echo "   ✅ fix(core): Enhance PR title validation with detailed error messages"
             echo "   ✅ fix(cli)!: Drop legacy flag support"
             echo "   ✅ docs: Improve installation guide"
             echo ""
@@ -89,3 +76,4 @@ jobs:
 
           echo ""
           echo "✅ Success! PR title complies with Conventional Commits rules."
+
