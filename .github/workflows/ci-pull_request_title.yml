@@ -32,7 +32,8 @@ jobs:
           # 1. Valid type & optional scope
           # 2. Capitalized description start
           # 3. NO trailing period (.), exclamation (!), question mark (?), or space
-          TITLE_REGEX="^(${TYPES})(\(${SCOPES}\))?!: [A-Z](.*[^.!? ])?$"
+          # Notice the inner parenthesis around (${SCOPES})
+          TITLE_REGEX="^(${TYPES})(\((${SCOPES})\))?!?: [A-Z](.*[^.!? ])?$"
 
           if [[ ! "$PR_TITLE" =~ $TITLE_REGEX ]]; then
             echo ""
