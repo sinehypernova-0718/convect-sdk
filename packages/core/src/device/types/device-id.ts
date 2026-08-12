@@ -1,4 +1,3 @@
-import { randomUUID } from 'node:crypto';
 import { InvalidDeviceIdError } from '../errors/device-id-error.js';
 
 /**
@@ -11,6 +10,34 @@ import { InvalidDeviceIdError } from '../errors/device-id-error.js';
  * @example
  * const id = DeviceId.generate();
  * const parsed = DeviceId.parse(externalInput);
+ */
+
+/**
+ * DeviceId is format-agnostic; parse() does not convert external IDs to UUIDs.
+ *
+ *             ┌──────────────────────┐
+ *             │       DeviceId       │
+ *             └──────────┬───────────┘
+ *                        ▲
+ *           ┌────────────┴────────────┐
+ *           │                         │
+ *      generate()                  parse()
+ *           │                         │
+ *      crypto.randomUUID()         unknown
+ *           │                         │
+ *      UUID string                 validate
+ *           │                         │
+ *           └────────────┬────────────┘
+ *                        │
+ *                        ▼
+ *                 DeviceId instance
+ *                        │
+ *                        ▼
+ *                 readonly identity
+ *
+ * generate() → Convect's current local generation strategy.
+ * parse()    → accepts external IDs; does not convert them to UUID.
+ * DeviceId   → remains format-agnostic.
  */
 export class DeviceId {
 	readonly value: string;
@@ -25,7 +52,7 @@ export class DeviceId {
 	 * Currently uses crypto.randomUUID() as the default generation strategy.
 	 */
 	static generate(): DeviceId {
-		return new DeviceId(randomUUID());
+		return new DeviceId(crypto.randomUUID());
 	}
 
 	/**
