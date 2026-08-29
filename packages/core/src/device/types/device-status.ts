@@ -29,6 +29,34 @@ export type DeviceStatusTransition = Readonly<{
  *
  * Defined as a module-level constant to avoid re-allocation on every call.
  */
+
+/*
+ *            DeviceStatus
+                   │
+                   │ defines
+                   ▼
+         ┌───────────────────┐
+         │ Valid states      │
+         │                   │
+         │ IDLE              │
+         │ CONNECTING        │
+         │ CONNECTED         │
+         │ DISCONNECTING     │
+         │ DISCONNECTED      │
+         │ ERROR             │
+         └─────────┬─────────┘
+                   │
+                   ▼
+          Runtime validation
+                   │
+        ┌──────────┴──────────┐
+        │                     │
+ Is this status?       Is this transition?
+        │                     │
+        ▼                     ▼
+ isDeviceStatus()    transition validation
+*/
+
 const validTransitions: Readonly<Record<DeviceStatus, ReadonlySet<DeviceStatus>>> = {
 	[DeviceStatus.IDLE]: new Set([DeviceStatus.CONNECTING, DeviceStatus.ERROR]),
 	[DeviceStatus.CONNECTING]: new Set([
