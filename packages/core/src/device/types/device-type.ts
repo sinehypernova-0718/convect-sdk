@@ -8,6 +8,37 @@ export enum DeviceType {
 	HYBRID = 'hybrid',
 }
 
+/**
+ * Device type vocabulary and runtime validation:
+ *
+ *   DeviceType enum
+ *        │
+ *        │ Object.values()
+ *        ▼
+ *   ┌──────────────────────┐
+ *   │ VALID_DEVICE_TYPES   │
+ *   │   ReadonlySet<string>│
+ *   └──────────┬───────────┘
+ *              │
+ *              │ .has(value)
+ *              │
+ *   unknown ───┴──► typeof value === "string"
+ *                         │
+ *                    ┌────┴────┐
+ *                    │         │
+ *                   false     true
+ *                    │         │
+ *                    ▼         ▼
+ *                 invalid   Set.has()
+ *                              │
+ *                         ┌────┴────┐
+ *                         │         │
+ *                        false     true
+ *                         │         │
+ *                         ▼         ▼
+ *                       invalid   DeviceType
+ */
+
 const VALID_DEVICE_TYPES: ReadonlySet<string> = new Set(Object.values(DeviceType));
 
 /**
