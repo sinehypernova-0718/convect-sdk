@@ -83,7 +83,7 @@ describe('parseDeviceStatus', () => {
 	it('should throw InvalidDeviceStatusError even if Symbol.prototype.toString is overridden', () => {
 		const originalSymbolToString = Symbol.prototype.toString;
 		try {
-			Symbol.prototype.toString = function () {
+			Symbol.prototype.toString = () => {
 				throw new Error('Overridden Symbol toString error');
 			};
 			expect(() => parseDeviceStatus(Symbol('test_symbol'))).toThrow(InvalidDeviceStatusError);
