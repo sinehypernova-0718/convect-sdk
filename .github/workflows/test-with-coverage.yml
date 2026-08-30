@@ -24,7 +24,9 @@ jobs:
     name: Test with Coverage
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    environment: codecov
+    environment:
+      name: codecov
+      deployment: false
 
     steps:
       - name: Checkout code
