@@ -5,11 +5,7 @@ export class DeviceError extends Error {
 	readonly code: string;
 	readonly context: Readonly<Record<string, unknown>> | undefined;
 
-	constructor(
-		message: string,
-		code: string,
-		context?: Readonly<Record<string, unknown>>,
-	) {
+	constructor(message: string, code: string, context?: Readonly<Record<string, unknown>>) {
 		super(message);
 		this.name = 'DeviceError';
 		this.code = code;
