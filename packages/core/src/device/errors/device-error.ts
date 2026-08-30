@@ -3,7 +3,7 @@
  */
 export class DeviceError extends Error {
 	readonly code: string;
-	readonly context?: Readonly<Record<string, unknown>>;
+	readonly context: Readonly<Record<string, unknown>> | undefined;
 
 	constructor(
 		message: string,
