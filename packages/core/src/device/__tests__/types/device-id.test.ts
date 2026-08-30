@@ -172,5 +172,33 @@ describe('DeviceId', () => {
 			// At runtime, verify the value is what we set.
 			expect(id.value).toBe('device-abc');
 		});
+
+		it('should be frozen to prevent property mutation', () => {
+			const id = DeviceId.parse('device-abc');
+			expect(Object.isFrozen(id)).toBe(true);
+		});
+
+		it('should throw when attempting to mutate the value property', () => {
+			const id = DeviceId.parse('device-abc');
+			expect(() => {
+				(id as { value: string }).value = 'mutated';
+			}).toThrow(TypeError);
+			expect(id.value).toBe('device-abc');
+		});
+
+		it('should throw when attempting to add new properties', () => {
+			const id = DeviceId.parse('device-abc');
+			expect(() => {
+				(id as unknown as { newProp: string }).newProp = 'should-fail';
+			}).toThrow(TypeError);
+		});
+
+		it('should maintain immutability through generate()', () => {
+			const id = DeviceId.generate();
+			expect(Object.isFrozen(id)).toBe(true);
+			expect(() => {
+				(id as { value: string }).value = 'mutated';
+			}).toThrow(TypeError);
+		});
 	});
 });

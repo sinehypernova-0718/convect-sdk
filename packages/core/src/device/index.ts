@@ -11,6 +11,10 @@ export {
 	DeviceId,
 	DeviceStatus,
 	DeviceType,
+	DeviceReachability,
 	isDeviceType,
+	isDeviceStatus,
+	parseDeviceStatus,
 	isValidTransition,
+	isDeviceReachability,
 } from './types/index.js';

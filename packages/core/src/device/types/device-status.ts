@@ -6,6 +6,8 @@
  *   Any state can transition to ERROR
  *   DISCONNECTED can loop back to IDLE (reconnect)
  */
+import { InvalidDeviceStatusError } from '../errors/device-status-error.js';
+
 export enum DeviceStatus {
 	IDLE = 'idle',
 	CONNECTING = 'connecting',
@@ -13,6 +15,29 @@ export enum DeviceStatus {
 	DISCONNECTING = 'disconnecting',
 	DISCONNECTED = 'disconnected',
 	ERROR = 'error',
+}
+
+const VALID_DEVICE_STATUSES: ReadonlySet<string> = new Set(Object.values(DeviceStatus));
+
+/**
+ * Check whether a value is a valid device status.
+ */
+export function isDeviceStatus(value: unknown): value is DeviceStatus {
+	return typeof value === 'string' && VALID_DEVICE_STATUSES.has(value);
+}
+
+/**
+ * Parse and validate a device status from external input.
+ *
+ * @param value - the value to parse
+ * @returns a valid DeviceStatus
+ * @throws InvalidDeviceStatusError if validation fails
+ */
+export function parseDeviceStatus(value: unknown): DeviceStatus {
+	if (!isDeviceStatus(value)) {
+		throw new InvalidDeviceStatusError(`Invalid device status: '${String(value)}'`);
+	}
+	return value;
 }
 
 /**
@@ -76,5 +101,9 @@ const validTransitions: Readonly<Record<DeviceStatus, ReadonlySet<DeviceStatus>>
  * Encapsulates state machine rules in one place.
  */
 export function isValidTransition(from: DeviceStatus, to: DeviceStatus): boolean {
+	if (!Object.prototype.hasOwnProperty.call(validTransitions, from)) {
+		return false;
+	}
 	return validTransitions[from]?.has(to) ?? false;
 }
+

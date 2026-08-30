@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { DeviceStatus, isValidTransition } from '../../types/device-status.js';
+import {
+	DeviceReachability,
+	DeviceStatus,
+	InvalidDeviceStatusError,
+	isDeviceReachability,
+	isDeviceStatus,
+	isValidTransition,
+	parseDeviceStatus,
+} from '../../index.js';
 
 describe('DeviceStatus', () => {
 	it('should define expected status values', () => {
@@ -14,6 +22,42 @@ describe('DeviceStatus', () => {
 	it('should have exactly 6 status values', () => {
 		const values = Object.values(DeviceStatus);
 		expect(values).toHaveLength(6);
+	});
+});
+
+describe('isDeviceStatus', () => {
+	it('should return true for valid DeviceStatus values', () => {
+		for (const status of Object.values(DeviceStatus)) {
+			expect(isDeviceStatus(status)).toBe(true);
+		}
+	});
+
+	it('should return false for invalid status values', () => {
+		expect(isDeviceStatus('unknown')).toBe(false);
+		expect(isDeviceStatus('constructor')).toBe(false);
+		expect(isDeviceStatus('__proto__')).toBe(false);
+		expect(isDeviceStatus(123)).toBe(false);
+		expect(isDeviceStatus(null)).toBe(false);
+		expect(isDeviceStatus(undefined)).toBe(false);
+	});
+});
+
+describe('parseDeviceStatus', () => {
+	it('should parse valid DeviceStatus values', () => {
+		expect(parseDeviceStatus('idle')).toBe(DeviceStatus.IDLE);
+		expect(parseDeviceStatus('connected')).toBe(DeviceStatus.CONNECTED);
+	});
+
+	it('should throw InvalidDeviceStatusError for invalid status values', () => {
+		expect(() => parseDeviceStatus('invalid_status')).toThrow(InvalidDeviceStatusError);
+		expect(() => parseDeviceStatus('constructor')).toThrow(InvalidDeviceStatusError);
+	});
+});
+
+describe('Public entry point exports', () => {
+	it('should export reachability API from public device index', () => {
+		expect(DeviceReachability).toBeDefined();
+		expect(isDeviceReachability('online')).toBe(true);
 	});
 });
 
@@ -106,6 +150,14 @@ describe('isValidTransition', () => {
 		it('should reject self-transitions', () => {
 			for (const status of Object.values(DeviceStatus)) {
 				expect(isValidTransition(status, status)).toBe(false);
+			}
+		});
+
+		it('should reject malformed status values targeting prototype properties', () => {
+			const malformedStatuses = ['constructor', '__proto__', 'toString', 'valueOf', 'hasOwnProperty'] as unknown as DeviceStatus[];
+			for (const status of malformedStatuses) {
+				expect(isValidTransition(status, DeviceStatus.CONNECTED)).toBe(false);
+				expect(isValidTransition(DeviceStatus.IDLE, status)).toBe(false);
 			}
 		});
 	});

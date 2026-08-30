@@ -44,6 +44,7 @@ export class DeviceId {
 
 	private constructor(value: string) {
 		this.value = value;
+		Object.freeze(this);
 	}
 
 	/**
