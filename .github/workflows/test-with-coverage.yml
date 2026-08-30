@@ -1,0 +1,87 @@
+name: Test with Coverage
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  coverage:
+    name: Test with Coverage
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: codecov
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup repository
+        uses: ./.github/actions/setup
+        with:
+          node-version: 24
+
+      - name: Run tests with coverage
+        run: pnpm test:coverage
+
+      - name: Upload Core coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: packages/core/coverage/lcov.info
+          flags: core
+          fail_ci_if_error: false
+
+      - name: Upload Protocol coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: packages/protocol/coverage/lcov.info
+          flags: protocol
+          fail_ci_if_error: false
+
+      - name: Upload SDK coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: packages/sdk/coverage/lcov.info
+          flags: sdk
+          fail_ci_if_error: false
+
+      - name: Upload MQTT Transport coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: packages/transports/transport-mqtt/coverage/lcov.info
+          flags: transport-mqtt
+          fail_ci_if_error: false
+
+      - name: Upload Serial Transport coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: packages/transports/transport-serial/coverage/lcov.info
+          flags: transport-serial
+          fail_ci_if_error: false
+
+      - name: Upload WebSerial Transport coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: packages/transports/transport-webserial/coverage/lcov.info
+          flags: transport-webserial
+          fail_ci_if_error: false

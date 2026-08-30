@@ -1,0 +1,69 @@
+# Codecov configuration for Convect SDK
+# Documentation: https://docs.codecov.com/docs/codecovyaml
+
+codecov:
+  require_ci_to_pass: true
+
+coverage:
+  precision: 2
+  round: down
+  range: "70...100"
+
+  status:
+    # Project-level coverage policy: tracks overall baseline without arbitrary percentage gates
+    project:
+      default:
+        target: auto
+        threshold: 1%
+        informational: true
+
+    # Patch-level coverage policy: provides feedback on new or modified code
+    patch:
+      default:
+        target: auto
+        informational: true
+
+# Package-level flags matching Convect monorepo boundaries
+# Carryforward retains test results for unaffected packages during partial Turbo CI runs
+flags:
+  # Core device lifecycle, connection management, and state handling (@convect/core)
+  core:
+    paths:
+      - packages/core/
+    carryforward: true
+
+  # Protocol definitions, packet serialization, and communication primitives (@convect/protocol)
+  protocol:
+    paths:
+      - packages/protocol/
+    carryforward: true
+
+  # High-level developer SDK (@convect/sdk)
+  sdk:
+    paths:
+      - packages/sdk/
+    carryforward: true
+
+  # MQTT transport implementation (@convect/transport-mqtt)
+  transport-mqtt:
+    paths:
+      - packages/transports/transport-mqtt/
+    carryforward: true
+
+  # Node.js SerialPort transport implementation (@convect/transport-serial)
+  transport-serial:
+    paths:
+      - packages/transports/transport-serial/
+    carryforward: true
+
+  # WebSerial API transport implementation (@convect/transport-webserial)
+  transport-webserial:
+    paths:
+      - packages/transports/transport-webserial/
+    carryforward: true
+
+# Pull request comment report configuration
+comment:
+  layout: "reach, diff, flags, files"
+  behavior: default
+  require_changes: false
