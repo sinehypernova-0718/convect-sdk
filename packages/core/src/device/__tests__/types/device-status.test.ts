@@ -52,6 +52,33 @@ describe('parseDeviceStatus', () => {
 		expect(() => parseDeviceStatus('invalid_status')).toThrow(InvalidDeviceStatusError);
 		expect(() => parseDeviceStatus('constructor')).toThrow(InvalidDeviceStatusError);
 	});
+
+	it('should throw InvalidDeviceStatusError for inputs that cannot be coerced with String()', () => {
+		const noProtoObj = Object.create(null);
+		expect(() => parseDeviceStatus(noProtoObj)).toThrow(InvalidDeviceStatusError);
+
+		const throwingToString = {
+			toString() {
+				throw new Error('Custom toString error');
+			},
+		};
+		expect(() => parseDeviceStatus(throwingToString)).toThrow(InvalidDeviceStatusError);
+
+		const throwingToPrimitive = {
+			[Symbol.toPrimitive]() {
+				throw new Error('Custom toPrimitive error');
+			},
+		};
+		expect(() => parseDeviceStatus(throwingToPrimitive)).toThrow(InvalidDeviceStatusError);
+	});
+
+	it('should safely format non-string primitives and objects without throwing', () => {
+		expect(() => parseDeviceStatus(null)).toThrow(InvalidDeviceStatusError);
+		expect(() => parseDeviceStatus(undefined)).toThrow(InvalidDeviceStatusError);
+		expect(() => parseDeviceStatus(123)).toThrow(InvalidDeviceStatusError);
+		expect(() => parseDeviceStatus(Symbol('test'))).toThrow(InvalidDeviceStatusError);
+		expect(() => parseDeviceStatus({})).toThrow(InvalidDeviceStatusError);
+	});
 });
 
 describe('Public entry point exports', () => {
@@ -154,7 +181,13 @@ describe('isValidTransition', () => {
 		});
 
 		it('should reject malformed status values targeting prototype properties', () => {
-			const malformedStatuses = ['constructor', '__proto__', 'toString', 'valueOf', 'hasOwnProperty'] as unknown as DeviceStatus[];
+			const malformedStatuses = [
+				'constructor',
+				'__proto__',
+				'toString',
+				'valueOf',
+				'hasOwnProperty',
+			] as unknown as DeviceStatus[];
 			for (const status of malformedStatuses) {
 				expect(isValidTransition(status, DeviceStatus.CONNECTED)).toBe(false);
 				expect(isValidTransition(DeviceStatus.IDLE, status)).toBe(false);

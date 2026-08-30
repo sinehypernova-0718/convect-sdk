@@ -27,6 +27,32 @@ export function isDeviceStatus(value: unknown): value is DeviceStatus {
 }
 
 /**
+ * Formats an invalid status for diagnostics without coercing arbitrary objects.
+ *
+ * Object coercion can execute user-defined `toString()` / `valueOf()` hooks,
+ * which would violate parseDeviceStatus()'s error contract by allowing malformed
+ * input to throw an unrelated error.
+ */
+function formatStatusValue(value: unknown): string {
+	if (typeof value === 'string') {
+		return value;
+	}
+	if (typeof value === 'number' || typeof value === 'boolean' || typeof value === 'bigint') {
+		return String(value);
+	}
+	if (value === null) {
+		return 'null';
+	}
+	if (value === undefined) {
+		return 'undefined';
+	}
+	if (typeof value === 'symbol') {
+		return value.toString();
+	}
+	return typeof value;
+}
+
+/**
  * Parse and validate a device status from external input.
  *
  * @param value - the value to parse
@@ -35,7 +61,7 @@ export function isDeviceStatus(value: unknown): value is DeviceStatus {
  */
 export function parseDeviceStatus(value: unknown): DeviceStatus {
 	if (!isDeviceStatus(value)) {
-		throw new InvalidDeviceStatusError(`Invalid device status: '${String(value)}'`);
+		throw new InvalidDeviceStatusError(`Invalid device status: '${formatStatusValue(value)}'`);
 	}
 	return value;
 }
@@ -101,9 +127,8 @@ const validTransitions: Readonly<Record<DeviceStatus, ReadonlySet<DeviceStatus>>
  * Encapsulates state machine rules in one place.
  */
 export function isValidTransition(from: DeviceStatus, to: DeviceStatus): boolean {
-	if (!Object.prototype.hasOwnProperty.call(validTransitions, from)) {
+	if (!Object.hasOwn(validTransitions, from)) {
 		return false;
 	}
 	return validTransitions[from]?.has(to) ?? false;
 }
-
