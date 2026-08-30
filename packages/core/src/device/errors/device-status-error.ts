@@ -22,7 +22,7 @@ export class InvalidDeviceStatusTransitionError extends DeviceError {
 	readonly to: DeviceStatus;
 
 	constructor(message: string, from: DeviceStatus, to: DeviceStatus) {
-		super(message, 'INVALID_DEVICE_STATUS_TRANSITION');
+		super(message, 'INVALID_DEVICE_STATUS_TRANSITION', { from, to });
 		this.name = 'InvalidDeviceStatusTransitionError';
 		this.from = from;
 		this.to = to;

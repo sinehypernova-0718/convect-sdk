@@ -32,4 +32,23 @@ describe('DeviceError', () => {
 		const error = new DeviceError('test', 'TEST_CODE');
 		expect(Object.getPrototypeOf(error)).toBe(DeviceError.prototype);
 	});
+
+	it('should have undefined context by default when not provided', () => {
+		const error = new DeviceError('test', 'TEST_CODE');
+		expect(error.context).toBeUndefined();
+	});
+
+	it('should store and allow access to context when provided', () => {
+		const context = { foo: 'bar', count: 42 };
+		const error = new DeviceError('test', 'TEST_CODE', context);
+		expect(error.context).toBeDefined();
+		expect(error.context).toEqual(context);
+	});
+
+	it('should round-trip context correctly', () => {
+		const context = { key: 'value', nested: { id: 123 } };
+		const error = new DeviceError('test', 'TEST_CODE', context);
+		expect(error.context?.key).toBe('value');
+		expect(error.context?.nested).toEqual({ id: 123 });
+	});
 });

@@ -108,4 +108,17 @@ describe('InvalidDeviceStatusTransitionError', () => {
 		);
 		expect(Object.getPrototypeOf(error)).toBe(InvalidDeviceStatusTransitionError.prototype);
 	});
+
+	it('should store from and to in base context property', () => {
+		const error = new InvalidDeviceStatusTransitionError(
+			'Cannot transition from IDLE to CONNECTED',
+			DeviceStatus.IDLE,
+			DeviceStatus.CONNECTED,
+		);
+		expect(error.context).toBeDefined();
+		expect(error.context).toEqual({
+			from: DeviceStatus.IDLE,
+			to: DeviceStatus.CONNECTED,
+		});
+	});
 });
