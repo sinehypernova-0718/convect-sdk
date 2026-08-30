@@ -79,6 +79,18 @@ describe('parseDeviceStatus', () => {
 		expect(() => parseDeviceStatus(Symbol('test'))).toThrow(InvalidDeviceStatusError);
 		expect(() => parseDeviceStatus({})).toThrow(InvalidDeviceStatusError);
 	});
+
+	it('should throw InvalidDeviceStatusError even if Symbol.prototype.toString is overridden', () => {
+		const originalSymbolToString = Symbol.prototype.toString;
+		try {
+			Symbol.prototype.toString = function () {
+				throw new Error('Overridden Symbol toString error');
+			};
+			expect(() => parseDeviceStatus(Symbol('test_symbol'))).toThrow(InvalidDeviceStatusError);
+		} finally {
+			Symbol.prototype.toString = originalSymbolToString;
+		}
+	});
 });
 
 describe('Public entry point exports', () => {

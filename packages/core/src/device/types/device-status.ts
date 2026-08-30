@@ -37,7 +37,12 @@ function formatStatusValue(value: unknown): string {
 	if (typeof value === 'string') {
 		return value;
 	}
-	if (typeof value === 'number' || typeof value === 'boolean' || typeof value === 'bigint') {
+	if (
+		typeof value === 'number' ||
+		typeof value === 'boolean' ||
+		typeof value === 'bigint' ||
+		typeof value === 'symbol'
+	) {
 		return String(value);
 	}
 	if (value === null) {
@@ -45,9 +50,6 @@ function formatStatusValue(value: unknown): string {
 	}
 	if (value === undefined) {
 		return 'undefined';
-	}
-	if (typeof value === 'symbol') {
-		return value.toString();
 	}
 	return typeof value;
 }
