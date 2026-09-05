@@ -85,10 +85,10 @@
 		"prepack": "node ../../scripts/copy-package-meta.mjs -t packages/core"
 	},
 	"devDependencies": {
-		"@types/node": "26.1.2"
+		"@types/node": "26.4.1"
 	},
 	"dependencies": {
-		"eventemitter3": "^5.0.0"
+		"eventemitter3": "^5.0.1"
 	},
 	"peerDependencies": {
 		"@convect/protocol": "workspace:*"
