@@ -27,7 +27,7 @@
 		"node": ">=24",
 		"pnpm": ">=11"
 	},
-	"packageManager": "pnpm@11.18.0",
+	"packageManager": "pnpm@11.25.0",
 	"scripts": {
 		"build": "turbo run build",
 		"build:core": "turbo run build --filter=@convect/core",
