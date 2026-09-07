@@ -30,7 +30,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup repository
         uses: ./.github/actions/setup
@@ -41,7 +41,7 @@ jobs:
         run: pnpm test:coverage
 
       - name: Upload Core coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: packages/core/coverage/lcov.info
@@ -49,7 +49,7 @@ jobs:
           fail_ci_if_error: false
 
       - name: Upload Protocol coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: packages/protocol/coverage/lcov.info
@@ -57,7 +57,7 @@ jobs:
           fail_ci_if_error: false
 
       - name: Upload SDK coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: packages/sdk/coverage/lcov.info
@@ -65,7 +65,7 @@ jobs:
           fail_ci_if_error: false
 
       - name: Upload MQTT Transport coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: packages/transports/transport-mqtt/coverage/lcov.info
@@ -73,7 +73,7 @@ jobs:
           fail_ci_if_error: false
 
       - name: Upload Serial Transport coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: packages/transports/transport-serial/coverage/lcov.info
@@ -81,7 +81,7 @@ jobs:
           fail_ci_if_error: false
 
       - name: Upload WebSerial Transport coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: packages/transports/transport-webserial/coverage/lcov.info
