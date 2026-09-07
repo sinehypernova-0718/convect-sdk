@@ -1,0 +1,71 @@
+# Topology:
+#   - npm ecosystem: third-party deps only. @convect/* internal packages
+#     are version-owned by Changesets, not Dependabot — see `ignore` block.
+#   - github-actions ecosystem: separate lane, own schedule.
+#   - Node/pnpm engines are managed manually (not covered here).
+
+version: 2
+
+updates:
+  # ---------------------------------------------------------------------
+  # npm — root + all transport sub-packages
+  # ---------------------------------------------------------------------
+  - package-ecosystem: "npm"
+    directories:
+      - "/"
+      - "/packages/core"
+      - "/packages/protocol"
+      - "/packages/sdk"
+      - "/packages/transports"
+      - "/packages/transports/transport-mqtt"
+      - "/packages/transports/transport-serial"
+      - "/packages/transports/transport-webserial"
+
+    schedule:
+      interval: "cron"
+      cronjob: "0 9 */3 * *" # every 3 days, 09:00 UTC
+
+    open-pull-requests-limit: 10
+
+    # Changesets owns internal package versioning — never let Dependabot
+    # touch @convect/* workspace deps.
+    ignore:
+      - dependency-name: "@convect/*"
+
+    # Deliberately NOT grouping TypeScript / tsdown / Turbo / Vitest / Biome —
+    # they're independently versioned with no compatibility contract between
+    # them, and grouping would just let one failing tool block the other
+    # three (fights the "small intentional duplication over hidden coupling"
+    # principle). The one exception is vitest + its coverage plugin, which
+    # are a single logical unit and should move in lockstep.
+    groups:
+      vitest:
+        patterns:
+          - "vitest"
+          - "@vitest/coverage-v8"
+
+    commit-message:
+      prefix: "chore"
+      prefix-development: "chore"
+      include: "scope"
+
+  # ---------------------------------------------------------------------
+  # github-actions — own lane, own schedule
+  # ---------------------------------------------------------------------
+  - package-ecosystem: "github-actions"
+    directory: "/"
+
+    schedule:
+      interval: "weekly"
+      day: "monday"
+
+    open-pull-requests-limit: 5
+
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+    commit-message:
+      prefix: "chore"
+      include: "scope"
