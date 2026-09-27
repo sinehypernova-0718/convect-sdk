@@ -3,7 +3,7 @@ import {
 	type DeviceStatusTransition,
 	InvalidDeviceStatusTransitionError,
 	isValidTransition,
-} from '../../../core/src/index.js';
+} from '@convect/core';
 
 /**
  * Per-instance lifecycle state manager for the SDK layer.
