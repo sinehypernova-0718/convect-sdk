@@ -55,10 +55,17 @@ jobs:
           echo "$NEEDS" | jq -r 'to_entries[] | "\(.key): \(.value.result)"'
           echo "============================"
 
-          # Fail closed: if the needs payload is empty, something is wrong.
+          # Fail closed: assert expected job count (4) and result presence for all jobs.
+          EXPECTED_JOBS=4
           count=$(echo "$NEEDS" | jq 'length')
-          if [[ "$count" -eq 0 ]]; then
-            echo "❌ No upstream jobs found — failing closed."
+          if [[ "$count" -ne "$EXPECTED_JOBS" ]]; then
+            echo "❌ Expected $EXPECTED_JOBS upstream job(s), but found $count — failing closed."
+            exit 1
+          fi
+
+          missing_results=$(echo "$NEEDS" | jq '[.[] | select(.result == null or .result == "")] | length')
+          if [[ "$missing_results" -gt 0 ]]; then
+            echo "❌ $missing_results upstream job(s) missing result status — failing closed."
             exit 1
           fi
 
