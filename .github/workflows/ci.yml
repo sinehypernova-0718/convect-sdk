@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+  merge_group:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    uses: ./.github/workflows/lint.yml
+
+  typecheck:
+    uses: ./.github/workflows/typecheck.yml
+
+  build:
+    uses: ./.github/workflows/build.yml
+
+  test:
+    uses: ./.github/workflows/test.yml
+
+  # ⚠️ BREAKING CHANGE: Renaming this job ID or changing its `name` will break
+  # branch protection rules that depend on the "Required Checks" status.
+  required-checks:
+    name: Required Checks
+    # `if: always()` is critical. Without it, a failed upstream job causes
+    # GitHub to skip this job entirely — and GitHub treats a skipped required
+    # check as passing, which silently defeats the merge gate.
+    if: always()
+    needs:
+      - lint
+      - typecheck
+      - build
+      - test
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Evaluate upstream results
+        env:
+          NEEDS: ${{ toJSON(needs) }}
+        run: |
+          set -euo pipefail
+
+          echo "=== Upstream job results ==="
+          echo "$NEEDS" | jq -r 'to_entries[] | "\(.key): \(.value.result)"'
+          echo "============================"
+
+          # Fail closed: assert expected job count (4) and result presence for all jobs.
+          EXPECTED_JOBS=4
+          count=$(echo "$NEEDS" | jq 'length')
+          if [[ "$count" -ne "$EXPECTED_JOBS" ]]; then
+            echo "❌ Expected $EXPECTED_JOBS upstream job(s), but found $count — failing closed."
+            exit 1
+          fi
+
+          missing_results=$(echo "$NEEDS" | jq '[.[] | select(.result == null or .result == "")] | length')
+          if [[ "$missing_results" -gt 0 ]]; then
+            echo "❌ $missing_results upstream job(s) missing result status — failing closed."
+            exit 1
+          fi
+
+          # success and skipped → PASS; failure and cancelled → FAIL.
+          # Uses an explicit conditional so jq errors propagate via set -e
+          # instead of being swallowed by a && / || chain.
+          failing=$(echo "$NEEDS" | jq '[.[] | select(.result != "success" and .result != "skipped")] | length')
+          if [[ "$failing" -gt 0 ]]; then
+            echo "❌ $failing upstream job(s) failed or were cancelled."
+            exit 1
+          fi
+
+          echo "✅ All upstream jobs passed."
