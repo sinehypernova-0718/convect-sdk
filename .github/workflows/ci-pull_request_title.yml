@@ -1,3 +1,6 @@
+# SECURITY: This workflow processes the PR title, which is untrusted user input.
+# The title is safely passed via an env var — never interpolate it directly into
+# a shell script. Never add actions/checkout or run PR-provided code here.
 name: "PR Title Check"
 
 on:
