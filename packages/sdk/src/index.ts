@@ -1,1 +1,1 @@
-export { LifecycleManager } from './lifecycle/index.js';
+export { LifecycleManager } from './lifecycle/index.j
