@@ -60,4 +60,22 @@ describe('ConnectionError', () => {
 		expect(error.context?.key).toBe('value');
 		expect(error.context?.nested).toEqual({ id: 123 });
 	});
+
+	it('should preserve cause by identity when passed via options', () => {
+		const original = new Error('underlying failure');
+		const error = new ConnectionError('test', 'TEST_CODE', undefined, { cause: original });
+		expect(error.cause).toBe(original);
+		expect(Object.hasOwn(error, 'cause')).toBe(true);
+	});
+
+	it('should have no own cause property when options are omitted', () => {
+		const error = new ConnectionError('test', 'TEST_CODE');
+		expect(Object.hasOwn(error, 'cause')).toBe(false);
+		expect(error.cause).toBeUndefined();
+	});
+
+	it('should have no own cause property for an empty options object', () => {
+		const error = new ConnectionError('test', 'TEST_CODE', undefined, {});
+		expect(Object.hasOwn(error, 'cause')).toBe(false);
+	});
 });

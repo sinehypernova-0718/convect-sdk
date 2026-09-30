@@ -1,9 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import {
 	BackoffStrategy,
+	ConnectionClosedError,
 	ConnectionError,
+	type ConnectionErrorDetails,
+	ConnectionRefusedError,
 	ConnectionState,
 	type ConnectionStateTransition,
+	ConnectionTimeoutError,
 	type ConnectionTimeouts,
 	DeviceError,
 	DeviceId,
@@ -27,6 +31,7 @@ import {
 	isValidTransition,
 	parseConnectionState,
 	parseDeviceStatus,
+	ReconnectExhaustedError,
 	type ReconnectPolicy,
 } from '../index.js';
 
@@ -139,5 +144,43 @@ describe('Root package exports (@convect/core)', () => {
 
 		expect(policy.backoff).toBe(BackoffStrategy.EXPONENTIAL);
 		expect(timeouts.connectMs).toBe(5000);
+	});
+
+	it('should export all connection failure error classes', () => {
+		expect(ConnectionTimeoutError).toBeDefined();
+		expect(ConnectionRefusedError).toBeDefined();
+		expect(ConnectionClosedError).toBeDefined();
+		expect(ReconnectExhaustedError).toBeDefined();
+
+		const timeout = new ConnectionTimeoutError('timed out', { timeoutMs: 5000 });
+		const refused = new ConnectionRefusedError('refused');
+		const closed = new ConnectionClosedError('closed', { reason: DisconnectReason.PEER_CLOSED });
+		const exhausted = new ReconnectExhaustedError('exhausted', 3);
+
+		expect(timeout).toBeInstanceOf(ConnectionError);
+		expect(refused).toBeInstanceOf(ConnectionError);
+		expect(closed).toBeInstanceOf(ConnectionError);
+		expect(exhausted).toBeInstanceOf(ConnectionError);
+
+		expect(timeout.code).toBe('CONNECTION_TIMEOUT');
+		expect(refused.code).toBe('CONNECTION_REFUSED');
+		expect(closed.code).toBe('CONNECTION_CLOSED');
+		expect(exhausted.code).toBe('RECONNECT_EXHAUSTED');
+
+		expect(timeout.timeoutMs).toBe(5000);
+		expect(closed.reason).toBe(DisconnectReason.PEER_CLOSED);
+		expect(exhausted.attempts).toBe(3);
+	});
+
+	it('should carry cause and context details typed through the root import', () => {
+		const original = new Error('native failure');
+		const details: ConnectionErrorDetails = {
+			context: { nativeCode: 'ECONNRESET' },
+			cause: original,
+		};
+		const error = new ConnectionRefusedError('wrapped', details);
+
+		expect(error.cause).toBe(original);
+		expect(error.context).toEqual({ nativeCode: 'ECONNRESET' });
 	});
 });
