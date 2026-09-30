@@ -1,27 +1,33 @@
 import { describe, expect, it } from 'vitest';
 import {
+	BackoffStrategy,
 	ConnectionError,
 	ConnectionState,
 	type ConnectionStateTransition,
+	type ConnectionTimeouts,
 	DeviceError,
 	DeviceId,
 	DeviceReachability,
 	DeviceStatus,
 	type DeviceStatusTransition,
 	DeviceType,
+	DisconnectReason,
 	InvalidConnectionStateError,
 	InvalidConnectionStateTransitionError,
 	InvalidDeviceIdError,
 	InvalidDeviceStatusError,
 	InvalidDeviceStatusTransitionError,
+	isBackoffStrategy,
 	isConnectionState,
 	isDeviceReachability,
 	isDeviceStatus,
 	isDeviceType,
+	isDisconnectReason,
 	isValidConnectionStateTransition,
 	isValidTransition,
 	parseConnectionState,
 	parseDeviceStatus,
+	type ReconnectPolicy,
 } from '../index.js';
 
 describe('Root package exports (@convect/core)', () => {
@@ -102,5 +108,36 @@ describe('Root package exports (@convect/core)', () => {
 		};
 		expect(transition.from).toBe(ConnectionState.DISCONNECTED);
 		expect(transition.to).toBe(ConnectionState.CONNECTING);
+	});
+
+	it('should export disconnect reason and backoff vocabulary', () => {
+		expect(DisconnectReason.USER_REQUESTED).toBe('user_requested');
+		expect(DisconnectReason.TIMEOUT).toBe('timeout');
+		expect(DisconnectReason.PEER_CLOSED).toBe('peer_closed');
+		expect(DisconnectReason.TRANSPORT_ERROR).toBe('transport_error');
+		expect(DisconnectReason.PROTOCOL_ERROR).toBe('protocol_error');
+		expect(DisconnectReason.RETRIES_EXHAUSTED).toBe('retries_exhausted');
+		expect(BackoffStrategy.FIXED).toBe('fixed');
+		expect(BackoffStrategy.LINEAR).toBe('linear');
+		expect(BackoffStrategy.EXPONENTIAL).toBe('exponential');
+
+		expect(isDisconnectReason('timeout')).toBe(true);
+		expect(isDisconnectReason('TIMEOUT')).toBe(false);
+		expect(isBackoffStrategy('exponential')).toBe(true);
+		expect(isBackoffStrategy('FIXED')).toBe(false);
+	});
+
+	it('should export connection option types usable through the root import', () => {
+		const policy: ReconnectPolicy = {
+			enabled: true,
+			initialDelayMs: 1000,
+			maxDelayMs: 30000,
+			backoff: BackoffStrategy.EXPONENTIAL,
+			jitter: true,
+		};
+		const timeouts: ConnectionTimeouts = { connectMs: 5000 };
+
+		expect(policy.backoff).toBe(BackoffStrategy.EXPONENTIAL);
+		expect(timeouts.connectMs).toBe(5000);
 	});
 });
