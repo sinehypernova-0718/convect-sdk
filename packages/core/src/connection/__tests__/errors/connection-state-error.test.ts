@@ -40,6 +40,15 @@ describe('InvalidConnectionStateError', () => {
 		expect(Object.getPrototypeOf(error)).toBe(InvalidConnectionStateError.prototype);
 	});
 
+	it('should preserve subclass identity through super()', () => {
+		class CustomStateError extends InvalidConnectionStateError {}
+		const error = new CustomStateError('Invalid state');
+		expect(error).toBeInstanceOf(CustomStateError);
+		expect(error).toBeInstanceOf(InvalidConnectionStateError);
+		expect(error).toBeInstanceOf(ConnectionError);
+		expect(Object.getPrototypeOf(error)).toBe(CustomStateError.prototype);
+	});
+
 	it('should have undefined context', () => {
 		const error = new InvalidConnectionStateError('Invalid state');
 		expect(error.context).toBeUndefined();
@@ -112,6 +121,19 @@ describe('InvalidConnectionStateTransitionError', () => {
 			ConnectionState.CONNECTED,
 		);
 		expect(Object.getPrototypeOf(error)).toBe(InvalidConnectionStateTransitionError.prototype);
+	});
+
+	it('should preserve subclass identity through super()', () => {
+		class CustomTransitionError extends InvalidConnectionStateTransitionError {}
+		const error = new CustomTransitionError(
+			'Invalid transition',
+			ConnectionState.FAILED,
+			ConnectionState.CONNECTED,
+		);
+		expect(error).toBeInstanceOf(CustomTransitionError);
+		expect(error).toBeInstanceOf(InvalidConnectionStateTransitionError);
+		expect(error).toBeInstanceOf(ConnectionError);
+		expect(Object.getPrototypeOf(error)).toBe(CustomTransitionError.prototype);
 	});
 
 	it('should store from and to in base context property', () => {

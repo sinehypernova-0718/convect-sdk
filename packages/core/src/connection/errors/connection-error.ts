@@ -10,6 +10,9 @@ export class ConnectionError extends Error {
 		this.name = 'ConnectionError';
 		this.code = code;
 		this.context = context;
-		Object.setPrototypeOf(this, ConnectionError.prototype);
+		// `new.target.prototype` (not a hard-coded prototype) keeps the real
+		// constructor's identity when a subclass calls super(), so
+		// `instanceof Subclass` stays true even on older transpile targets.
+		Object.setPrototypeOf(this, new.target.prototype);
 	}
 }

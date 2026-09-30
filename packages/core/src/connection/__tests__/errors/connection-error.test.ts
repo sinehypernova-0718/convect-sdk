@@ -33,6 +33,15 @@ describe('ConnectionError', () => {
 		expect(Object.getPrototypeOf(error)).toBe(ConnectionError.prototype);
 	});
 
+	it('should preserve subclass identity through super()', () => {
+		class CustomConnectionError extends ConnectionError {}
+		const error = new CustomConnectionError('test', 'CUSTOM_CODE');
+		expect(error).toBeInstanceOf(CustomConnectionError);
+		expect(error).toBeInstanceOf(ConnectionError);
+		expect(error).toBeInstanceOf(Error);
+		expect(Object.getPrototypeOf(error)).toBe(CustomConnectionError.prototype);
+	});
+
 	it('should have undefined context by default when not provided', () => {
 		const error = new ConnectionError('test', 'TEST_CODE');
 		expect(error.context).toBeUndefined();

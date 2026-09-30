@@ -8,7 +8,7 @@ export class InvalidConnectionStateError extends ConnectionError {
 	constructor(message: string) {
 		super(message, 'INVALID_CONNECTION_STATE');
 		this.name = 'InvalidConnectionStateError';
-		Object.setPrototypeOf(this, InvalidConnectionStateError.prototype);
+		Object.setPrototypeOf(this, new.target.prototype);
 	}
 }
 
@@ -26,6 +26,6 @@ export class InvalidConnectionStateTransitionError extends ConnectionError {
 		this.name = 'InvalidConnectionStateTransitionError';
 		this.from = from;
 		this.to = to;
-		Object.setPrototypeOf(this, InvalidConnectionStateTransitionError.prototype);
+		Object.setPrototypeOf(this, new.target.prototype);
 	}
 }
