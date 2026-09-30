@@ -47,9 +47,13 @@
 		"test:coverage": "vitest run --coverage",
 		"clean": "rimraf dist coverage",
 		"format": "biome format .",
-		"format:fix": "biome format . --fix",
+		"format:fix": "biome format . --write",
 		"lint": "biome lint .",
-		"lint:fix": "biome lint . --fix",
+		"lint:fix": "biome lint . --write",
+		"imports": "biome check . --formatter-enabled=false --linter-enabled=false",
+		"imports:fix": "biome check . --formatter-enabled=false --linter-enabled=false --write",
+		"check": "biome check .",
+		"check:fix": "biome check . --write",
 		"prepack": "node ../../../scripts/copy-package-meta.mjs -t packages/transports/transport-mqtt"
 	},
 	"dependencies": {
