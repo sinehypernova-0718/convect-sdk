@@ -4,6 +4,7 @@ import {
 	DeviceId,
 	DeviceReachability,
 	DeviceStatus,
+	type DeviceStatusTransition,
 	DeviceType,
 	InvalidDeviceIdError,
 	InvalidDeviceStatusError,
@@ -13,7 +14,6 @@ import {
 	isDeviceType,
 	isValidTransition,
 	parseDeviceStatus,
-	type DeviceStatusTransition,
 } from '../index.js';
 
 describe('Root package exports (@convect/core)', () => {

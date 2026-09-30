@@ -9,12 +9,12 @@ export type { DeviceStatusTransition } from './types/index.js';
 
 export {
 	DeviceId,
+	DeviceReachability,
 	DeviceStatus,
 	DeviceType,
-	DeviceReachability,
-	isDeviceType,
-	isDeviceStatus,
-	parseDeviceStatus,
-	isValidTransition,
 	isDeviceReachability,
+	isDeviceStatus,
+	isDeviceType,
+	isValidTransition,
+	parseDeviceStatus,
 } from './types/index.js';
